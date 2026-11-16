@@ -1,0 +1,35 @@
+{
+  "organised_on": "2026-10-21",
+  "original_download_date_recorded": "2026-10-14",
+  "downloaded_again": false,
+  "publisher": "Stefano Leone on Kaggle",
+  "dataset": "TripAdvisor European restaurants",
+  "catalogue_url": "https://www.kaggle.com/datasets/stefanoleone992/tripadvisor-european-restaurants",
+  "distribution_url": "https://www.kaggle.com/api/v1/datasets/download/stefanoleone992/tripadvisor-european-restaurants",
+  "origin_description": "Tripadvisor establishment catalogue published as a dataset on Kaggle; not a live Tripadvisor API",
+  "snapshot_recorded_in_proposal": "May 2021",
+  "licence_recorded_in_proposal": "CC0 according to publisher",
+  "original_archive": {
+    "file": "tripadvisor_european_restaurants.zip",
+    "bytes": 106461522,
+    "sha256": "806e38fb0b7e568ed4f7fbde3766a8b504771603cf0527f3049f8c08b4680b53",
+    "csv_member": "tripadvisor_european_restaurants.csv",
+    "uncompressed_csv_bytes": 679683570,
+    "rows": 1083397,
+    "columns": 42,
+    "crc_verified_by_full_read": true
+  },
+  "lisbon_extract": {
+    "file": "tripadvisor_lisboa.csv",
+    "bytes": 3476964,
+    "sha256": "3bc43aca520c9db3cc780f85441cc60645235fbfe2b6eeb0dab9e9f09d511dd2",
+    "rows": 5261,
+    "columns": 42,
+    "encoding": "UTF-8 with BOM",
+    "selection": "country = 'Portugal' AND city = 'Lisbon'",
+    "transformations": "Row selection only; original columns and field values retained. CSV quoting reserialized.",
+    "duplicate_restaurant_link_count": 0
+  },
+  "synthetic_data_in_these_files": false,
+  "people_and_activity": "No generated people/reservations/visits in these files; those are separate synthetic project data."
+}

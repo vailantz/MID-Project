@@ -1,0 +1,774 @@
+{
+  "executed_at": "2026-11-16T13:58:45+00:00",
+  "scenario_as_of": "2026-10-21T23:59:59+01:00",
+  "is_synthetic_activity": true,
+  "q1_sushi_rating": [
+    {
+      "establishment_id": 872,
+      "source_id": "g189158-d12497758",
+      "name": "Need \" The Art Of Taste\"",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 1053,
+      "source_id": "g189158-d12911309",
+      "name": "Shui Jing Gong",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 1267,
+      "source_id": "g189158-d13445397",
+      "name": "Casa NanBan Sushi",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 1298,
+      "source_id": "g189158-d13546079",
+      "name": "Sushi People",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 1474,
+      "source_id": "g189158-d14149020",
+      "name": "Restaurante D. Paula",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 1661,
+      "source_id": "g189158-d15058749",
+      "name": "Perto Bento",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 1811,
+      "source_id": "g189158-d15509483",
+      "name": "Nobuki",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 1834,
+      "source_id": "g189158-d15558022",
+      "name": "TARARA Restaurant and Bar",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 1887,
+      "source_id": "g189158-d15701130",
+      "name": "Legumi Sushi Vegan",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 1961,
+      "source_id": "g189158-d16657798",
+      "name": "Wok Northern Lights",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 2417,
+      "source_id": "g189158-d19096451",
+      "name": "SushiKo Express Lisboa",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 2580,
+      "source_id": "g189158-d19825456",
+      "name": "Ama Sushi",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 2647,
+      "source_id": "g189158-d20110406",
+      "name": "Shun Open Kitchen",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 2758,
+      "source_id": "g189158-d20990000",
+      "name": "Amor ao Mar",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 2867,
+      "source_id": "g189158-d21251109",
+      "name": "Sushi Jin",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 2877,
+      "source_id": "g189158-d21268221",
+      "name": "Sushi City",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 2883,
+      "source_id": "g189158-d21283222",
+      "name": "Sushi AI",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 2892,
+      "source_id": "g189158-d21295231",
+      "name": "Sushi Korner",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 3103,
+      "source_id": "g189158-d23136228",
+      "name": "Sky Valley Lisboa",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 3120,
+      "source_id": "g189158-d23212283",
+      "name": "Chirashi Sushi E Ramen",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 3124,
+      "source_id": "g189158-d23218810",
+      "name": "Kai",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 4251,
+      "source_id": "g189158-d6654430",
+      "name": "S. Cabral Lopes",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 4820,
+      "source_id": "g189158-d8326488",
+      "name": "Restaurante SiHai",
+      "average_rating": 5.0
+    },
+    {
+      "establishment_id": 3,
+      "source_id": "g189158-d10005260",
+      "name": "Wood Sushi in a Box",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 323,
+      "source_id": "g189158-d10555907",
+      "name": "Koko Restaurant Sushi Bar",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 387,
+      "source_id": "g189158-d10730796",
+      "name": "Nomada Avenidas Novas",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 531,
+      "source_id": "g189158-d11722124",
+      "name": "Chirashi Sushi e Ramen",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 573,
+      "source_id": "g189158-d11844367",
+      "name": "Kitanori Sushi Lounge",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 663,
+      "source_id": "g189158-d11998285",
+      "name": "Sushi cafe",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 703,
+      "source_id": "g189158-d12124549",
+      "name": "Aron Sushi",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 799,
+      "source_id": "g189158-d12340673",
+      "name": "Sushisan",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1008,
+      "source_id": "g189158-d12849430",
+      "name": "SushiNow - Parque das Nações",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1010,
+      "source_id": "g189158-d12850794",
+      "name": "O Japones",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1020,
+      "source_id": "g189158-d12868560",
+      "name": "Hanami Sushi",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1073,
+      "source_id": "g189158-d12950319",
+      "name": "CervejAlfama",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1155,
+      "source_id": "g189158-d13149199",
+      "name": "Wood Sushi - Av. Roma",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1195,
+      "source_id": "g189158-d13273188",
+      "name": "Saikó - Campo Pequeno",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1235,
+      "source_id": "g189158-d13360794",
+      "name": "Nikkei",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1242,
+      "source_id": "g189158-d13377429",
+      "name": "Unique Sushi Lab",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1253,
+      "source_id": "g189158-d13410327",
+      "name": "Restaurant LONG",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1429,
+      "source_id": "g189158-d14059407",
+      "name": "Soão - Taberna Asiática",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1682,
+      "source_id": "g189158-d15091559",
+      "name": "Izanagi",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1785,
+      "source_id": "g189158-d15322619",
+      "name": "SEEN Lisboa",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1803,
+      "source_id": "g189158-d15362816",
+      "name": "Restaurante China Lido",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1837,
+      "source_id": "g189158-d15560868",
+      "name": "Tribo Sushibar",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1888,
+      "source_id": "g189158-d15701359",
+      "name": "Mercado Oriental",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 2055,
+      "source_id": "g189158-d17326902",
+      "name": "Tsukiji Lisboa",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 2213,
+      "source_id": "g189158-d17708180",
+      "name": "MonteCristo Caffe Lounge",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 2227,
+      "source_id": "g189158-d17735698",
+      "name": "Sushidō",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 2776,
+      "source_id": "g189158-d21052198",
+      "name": "Katana Sushi Santos",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 2828,
+      "source_id": "g189158-d21199181",
+      "name": "Mattë Lisboa",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 3136,
+      "source_id": "g189158-d2325199",
+      "name": "Restaurante Kampai",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 3288,
+      "source_id": "g189158-d2617050",
+      "name": "Suntory Exotic Japanese Fusion",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 3296,
+      "source_id": "g189158-d2617123",
+      "name": "Yakuza Lisboa",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 3573,
+      "source_id": "g189158-d3815400",
+      "name": "Kyoto House",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 4356,
+      "source_id": "g189158-d6957522",
+      "name": "Tasca Kome",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 4372,
+      "source_id": "g189158-d697239",
+      "name": "Bonsai Restaurante Japones",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 4479,
+      "source_id": "g189158-d7254236",
+      "name": "Aya Bistro",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 4627,
+      "source_id": "g189158-d7702825",
+      "name": "Go Juu",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 4666,
+      "source_id": "g189158-d7787584",
+      "name": "Hikidashi - Taberna Japonesa",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 5065,
+      "source_id": "g189158-d8756692",
+      "name": "Hanaya Lumiar",
+      "average_rating": 4.5
+    },
+    {
+      "establishment_id": 1,
+      "source_id": "g189158-d10002838",
+      "name": "Miss Jappa",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 263,
+      "source_id": "g189158-d10466969",
+      "name": "Miyagi Sushi",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 421,
+      "source_id": "g189158-d10796501",
+      "name": "Noori Sushi",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 490,
+      "source_id": "g189158-d11633782",
+      "name": "Restaurante chinês Royal",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 574,
+      "source_id": "g189158-d11847244",
+      "name": "Edo Sushi - Lumiar",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 685,
+      "source_id": "g189158-d12076739",
+      "name": "Sushi dos Sá Morais",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 764,
+      "source_id": "g189158-d12251673",
+      "name": "Sushic Chiado",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 886,
+      "source_id": "g189158-d12524038",
+      "name": "Mouzinho - Restaurant & Bar",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 898,
+      "source_id": "g189158-d12559641",
+      "name": "A Loja Sushi Lab",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 976,
+      "source_id": "g189158-d12713481",
+      "name": "Atari Baby",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 1034,
+      "source_id": "g189158-d12878705",
+      "name": "Hanaya Chiado",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 1161,
+      "source_id": "g189158-d13162855",
+      "name": "Huang He Restaurante",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 1233,
+      "source_id": "g189158-d13360346",
+      "name": "Hanami Sushi Forum Sintra",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 1247,
+      "source_id": "g189158-d13390341",
+      "name": "Sushi Giro",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 1385,
+      "source_id": "g189158-d13974483",
+      "name": "Restaurante Chinês Xiang",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 1555,
+      "source_id": "g189158-d14877892",
+      "name": "Sushi Delicia Lisbon",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 1659,
+      "source_id": "g189158-d15056775",
+      "name": "Afuri",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 1688,
+      "source_id": "g189158-d15100341",
+      "name": "Okah Restaurant & Rooftop",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 1885,
+      "source_id": "g189158-d1569639",
+      "name": "Joia do Palacio",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 2276,
+      "source_id": "g189158-d17822594",
+      "name": "Rendalls Place",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 2422,
+      "source_id": "g189158-d19103213",
+      "name": "SushiCorner Parque das Nações",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 2469,
+      "source_id": "g189158-d1929374",
+      "name": "Confraria Lx",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3237,
+      "source_id": "g189158-d2615268",
+      "name": "Arigato - Campo Pequeno",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3241,
+      "source_id": "g189158-d2615346",
+      "name": "Arigato - Parque das Nações",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3282,
+      "source_id": "g189158-d2616915",
+      "name": "Sakana Restaurante Bar Sushi",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3283,
+      "source_id": "g189158-d2616928",
+      "name": "Sakura Infante Santo",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3290,
+      "source_id": "g189158-d2617058",
+      "name": "Sushifashion Miragem",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3292,
+      "source_id": "g189158-d2617072",
+      "name": "SushiCafé Amoreiras",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3302,
+      "source_id": "g189158-d2621918",
+      "name": "Shushi Time",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3600,
+      "source_id": "g189158-d3849336",
+      "name": "Sushi Factory",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3604,
+      "source_id": "g189158-d3849607",
+      "name": "Toyama",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3612,
+      "source_id": "g189158-d3861803",
+      "name": "King Sushi",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3614,
+      "source_id": "g189158-d3863089",
+      "name": "Peisheirada",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3719,
+      "source_id": "g189158-d4237163",
+      "name": "Koko Restaurant",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 3765,
+      "source_id": "g189158-d4411232",
+      "name": "Edo Sushi",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4212,
+      "source_id": "g189158-d6476702",
+      "name": "Sushima",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4228,
+      "source_id": "g189158-d6553443",
+      "name": "Yokohama",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4263,
+      "source_id": "g189158-d6701528",
+      "name": "Nui Sushi",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4415,
+      "source_id": "g189158-d7008523",
+      "name": "Noori",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4503,
+      "source_id": "g189158-d7294452",
+      "name": "Up to Sushi - Picoas",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4606,
+      "source_id": "g189158-d7648926",
+      "name": "Sakura",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4658,
+      "source_id": "g189158-d7763865",
+      "name": "Restaurante Maizakura",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4687,
+      "source_id": "g189158-d7814164",
+      "name": "Wok Ninja",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4689,
+      "source_id": "g189158-d781461",
+      "name": "Bica do Sapato",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4719,
+      "source_id": "g189158-d797363",
+      "name": "Tomo",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4731,
+      "source_id": "g189158-d7994283",
+      "name": "H&S",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4920,
+      "source_id": "g189158-d8529951",
+      "name": "Tsubaki - Japanese Cuisine",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 4925,
+      "source_id": "g189158-d8534851",
+      "name": "Restaurante Japonês Samurai",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 5104,
+      "source_id": "g189158-d8809225",
+      "name": "Kiku",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 5108,
+      "source_id": "g189158-d8811901",
+      "name": "Cidade Do Mar",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 5163,
+      "source_id": "g189158-d9585416",
+      "name": "Rabo D'Pêxe",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 5172,
+      "source_id": "g189158-d9681061",
+      "name": "Sushi Ocean",
+      "average_rating": 4.0
+    },
+    {
+      "establishment_id": 5203,
+      "source_id": "g189158-d9756092",
+      "name": "Sushi Restaurante Japonês",
+      "average_rating": 4.0
+    }
+  ],
+  "q2_total_establishments": 5261,
+  "q2_zero_visit_establishments": 5252,
+  "q2_only_nonzero_rows": [
+    {
+      "establishment_id": 263,
+      "source_id": "g189158-d10466969",
+      "name": "Miyagi Sushi",
+      "visit_events": 4,
+      "simulated_attendances": 10
+    },
+    {
+      "establishment_id": 12,
+      "source_id": "g189158-d10025218",
+      "name": "RendezVous",
+      "visit_events": 3,
+      "simulated_attendances": 9
+    },
+    {
+      "establishment_id": 1,
+      "source_id": "g189158-d10002838",
+      "name": "Miss Jappa",
+      "visit_events": 3,
+      "simulated_attendances": 7
+    },
+    {
+      "establishment_id": 27,
+      "source_id": "g189158-d10044466",
+      "name": "Pau de Canela",
+      "visit_events": 3,
+      "simulated_attendances": 5
+    },
+    {
+      "establishment_id": 3,
+      "source_id": "g189158-d10005260",
+      "name": "Wood Sushi in a Box",
+      "visit_events": 1,
+      "simulated_attendances": 3
+    },
+    {
+      "establishment_id": 11,
+      "source_id": "g189158-d10006576",
+      "name": "Cachorraria Nacional",
+      "visit_events": 2,
+      "simulated_attendances": 3
+    },
+    {
+      "establishment_id": 5,
+      "source_id": "g189158-d10044675",
+      "name": "Cervejeira Lusitana",
+      "visit_events": 1,
+      "simulated_attendances": 2
+    },
+    {
+      "establishment_id": 8,
+      "source_id": "g189158-d10087956",
+      "name": "O Sinal",
+      "visit_events": 1,
+      "simulated_attendances": 2
+    },
+    {
+      "establishment_id": 4,
+      "source_id": "g189158-d10005571",
+      "name": "Paul (Rua Augusta)",
+      "visit_events": 1,
+      "simulated_attendances": 1
+    }
+  ],
+  "q2_visit_events": 19,
+  "q2_simulated_attendances": 42,
+  "q3_distinct_registered_people": [
+    {
+      "source_id": "g189158-d10002838",
+      "name": "Miss Jappa",
+      "distinct_registered_people": 3,
+      "simulated_attendances": 7
+    },
+    {
+      "source_id": "g189158-d10466969",
+      "name": "Miyagi Sushi",
+      "distinct_registered_people": 3,
+      "simulated_attendances": 10
+    }
+  ]
+}

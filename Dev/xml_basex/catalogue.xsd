@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Esquema XSD 1.0 definido pelo projeto, nao pelo fornecedor.
+     Valida a estrutura comum do catalogo e as chaves/referencias.
+     sourceFields conserva os campos brutos sem validacao especifica (processContents=skip). -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="Category">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="museum"/><xs:enumeration value="monument"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NonEmpty">
+    <xs:restriction base="xs:token"><xs:minLength value="1"/></xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Latitude">
+    <xs:restriction base="xs:decimal"><xs:minInclusive value="-90"/><xs:maxInclusive value="90"/></xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Longitude">
+    <xs:restriction base="xs:decimal"><xs:minInclusive value="-180"/><xs:maxInclusive value="180"/></xs:restriction>
+  </xs:simpleType>
+  <xs:element name="culturalCatalogue">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="sources">
+          <xs:complexType><xs:sequence>
+            <xs:element name="source" minOccurs="1" maxOccurs="unbounded">
+              <xs:complexType><xs:sequence>
+                <xs:element name="catalogueUrl" type="xs:anyURI"/>
+                <xs:element name="catalogueDeclaredLicence" type="xs:string"/>
+              </xs:sequence>
+                <xs:attribute name="id" type="Category" use="required"/>
+                <xs:attribute name="provider" type="NonEmpty" use="required"/>
+                <xs:attribute name="accessDate" type="xs:date" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="place" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType><xs:sequence>
+            <xs:element name="name" type="NonEmpty"/>
+            <xs:element name="location"><xs:complexType><xs:sequence>
+              <xs:element name="address" type="xs:string"/>
+              <xs:element name="latitude" type="Latitude"/>
+              <xs:element name="longitude" type="Longitude"/>
+              <xs:element name="parish" type="xs:string" minOccurs="0"/>
+            </xs:sequence></xs:complexType></xs:element>
+            <xs:element name="contact"><xs:complexType><xs:sequence>
+              <xs:element name="telephone" type="xs:string" nillable="true"/>
+              <xs:element name="fax" type="xs:string" nillable="true" minOccurs="0"/>
+              <xs:element name="email" type="xs:string" nillable="true"/>
+              <xs:element name="website" type="xs:string" nillable="true"/>
+            </xs:sequence></xs:complexType></xs:element>
+            <xs:element name="description" type="xs:string" nillable="true"/>
+            <xs:element name="sourceFields"><xs:complexType><xs:sequence>
+              <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+            </xs:sequence></xs:complexType></xs:element>
+          </xs:sequence>
+            <xs:attribute name="id" use="required"><xs:simpleType>
+              <xs:restriction base="xs:string"><xs:pattern value="(museum|monument):.+"/></xs:restriction>
+            </xs:simpleType></xs:attribute>
+            <xs:attribute name="category" type="Category" use="required"/>
+            <xs:attribute name="sourceRef" type="Category" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="generatedOn" type="xs:date" use="required"/>
+      <xs:attribute name="coordinateSystem" use="required" fixed="EPSG:4326"/>
+    </xs:complexType>
+    <xs:key name="sourceKey"><xs:selector xpath="sources/source"/><xs:field xpath="@id"/></xs:key>
+    <xs:key name="placeKey"><xs:selector xpath="place"/><xs:field xpath="@id"/></xs:key>
+    <xs:keyref name="placeSource" refer="sourceKey"><xs:selector xpath="place"/><xs:field xpath="@sourceRef"/></xs:keyref>
+  </xs:element>
+</xs:schema>

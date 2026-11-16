@@ -1,0 +1,5 @@
+BaseX 12.4 core package
+Official download: https://files.basex.org/releases/12.4/BaseX124.jar
+Downloaded: 2026-10-21
+SHA-256: 3975bc91acfadd1c139872dd9fc154f2fc7a166792509c7665501089edf5e301
+License information is included in the original JAR archive.

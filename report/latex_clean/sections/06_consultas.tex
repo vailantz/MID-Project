@@ -1,0 +1,115 @@
+\section{Representative Queries}\label{sec:consultas}
+The catalogue contains twelve queries, six per student: two simple, two intermediate and two complex. Each query crosses sources from both subtopics; complex queries use all four sources. Table~\ref{tab:matriz_consultas} identifies each query's responsibility and purpose. The specifications that follow form the integrated execution contract for P2.
+\begin{table}[!htbp]\centering\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.1}
+\caption{Catalogue of the twelve queries and source contributions.}\label{tab:matriz_consultas}
+\begin{tabularx}{\textwidth}{lllp{2.3cm}X}\toprule
+\textbf{ID} & \textbf{Author} & \textbf{Level} & \textbf{Sources} & \textbf{Purpose} \\\midrule
+Q01 & Gonçalo & Simple & A2, B1 & Restaurants near an accommodation. \\
+Q02 & Gonçalo & Simple & A2, B2 & Cultural places near an accommodation. \\
+Q03 & Tiago & Simple & A2, B1 & Dining options for family accommodations. \\
+Q04 & Tiago & Simple & A2, B2 & Accommodations near museums in a parish. \\
+Q05 & Gonçalo & Intermediate & A2, B1 & Dining summary per budget accommodation. \\
+Q06 & Gonçalo & Intermediate & A2, B1 & Accommodation and restaurant provision by parish. \\
+Q07 & Tiago & Intermediate & A2, B1 & Monthly activity of restaurants with nearby accommodation. \\
+Q08 & Tiago & Intermediate & A2, B1, B2 & Both visit types in the same month and accommodation options. \\
+Q09 & Gonçalo & Complex & A1, A2, B1, B2 & Association between food mentions and restaurants in cultural areas. \\
+Q10 & Tiago & Complex & A1, A2, B1, B2 & Joint selection of accommodation, culture and Portuguese cuisine. \\
+Q11 & Gonçalo & Complex & A1, A2, B1, B2 & Textual evidence and local provision summary per accommodation. \\
+Q12 & Tiago & Complex & A1, A2, B1, B2 & Visit sequence with accommodation suggestions and reviews. \\\bottomrule
+\end{tabularx}\end{table}
+\subsection{Common Contracts}\label{subsec:contratos_consultas}
+\paragraph{Distances and Eligibility.}
+Haversine distance is calculated over valid WGS84 latitude and longitude, using an Earth radius of 6\,371\,008.8 m. The condition is strict, \(d<r\); full-precision distance determines filtering and ordering, with rounding to one decimal place for display. Unknown or invalid coordinates are excluded from spatial predicates. Pairs and counts use distinct local identifiers before aggregation. Ties use lexicographic order of canonical identifiers.
+\paragraph{Known Values and Aggregation.}
+Each predicate requires known values for the attributes it compares. Optional projected attributes retain \texttt{null}. Means use known values; an empty set yields a null mean and zero count. Outer joins preserve the side specified in each query. Restaurant ratings retain the 0--5 scale; comment scores are the experiment's simulated individual variable.
+\paragraph{Municipality, Amenities and Comment Dates.}
+The Lisbon criterion refers to field \texttt{location.municipality} with canonical value \texttt{Lisboa}; preparation transforms alias \texttt{Lisbon}. The Wi-Fi condition requires \texttt{Wifi} membership in \texttt{amenities}, after normalisation of aliases \texttt{wi-fi} and \texttt{wireless internet}. Comment recency ordering uses publication date.
+\paragraph{Price and Publication.}
+The catalogue price is the resolved EUR reference amount from the prepared source data, with basis \texttt{unspecified}, under \texttt{latest-valid} (Section~\ref{subsec:modelos_goncalo}). The policy precedes amount filtering and ordering. Recent publication means a known date on or after 1 January 2025, inclusive.
+\paragraph{Textual Evidence.}
+Text conditions use A1 analyser tokens with lowercase matching. \texttt{QUIET} and \texttt{not quiet} contain token \texttt{quiet}; \texttt{quietness} is a different token. Results are termed \emph{lexical matches}, and snippets allow their context to be examined. Each logical review contributes once, even when its history contains copies. Queries aggregating text define the reference population and numerator.
+\paragraph{Cultural Contacts.}
+The mediator preserves B2's original text and calculates a normalised primary contact. It splits segments at slashes or semicolons, removes display spaces and regards as complete Portuguese numbers with nine national digits starting with 2 or 9, optionally preceded by \texttt{+351} or \texttt{00351}. It selects the first complete segment and displays \texttt{+351} followed by the nine digits. Thus, \texttt{+351 213 250 800 / 835} yields \texttt{+351213250800}; the extension remains traceable in the original. Without a complete segment, the normalised contact is null. This is an exercise-specific format rule. Telephone contact is optional unless a query requires a normalisable contact.
+\paragraph{Reference Cases.}
+The following examples are logical validation fixtures identified by illustrative codes. The stated distances are the geodesic calculation results for those cases. All example amounts are resolved EUR references with the monetary context defined above. Case element names coincide with their codes unless explicitly stated otherwise. Examples specify the expected P2 response; measured P1 results appear in Section~\ref{sec:povoamento_qualidade}.
+\subsection{Simple Queries}
+Simple queries combine selections and one spatial relationship between two sources, producing identified pairs. The monetary policy is a local A2 service used by filters that need it.
+\subsubsection{Q01 --- Restaurants Near an Accommodation (Gonçalo)}
+\textbf{Input and operation:} given a \texttt{listing\_\allowbreak{}id}, obtain its A2 position and select B1 restaurants less than 400 m away.\par
+\textbf{Result:} one row per accommodation--restaurant pair, with both IDs, names, restaurant rating and distance. Order by distance and restaurant ID.\par
+\textbf{Case:} A9001 has R1 (rating 4.0, two labels) at 300 m, R2 (rating 4.5) at 450 m and R3 with unknown position.\par
+\textbf{Expected response:} one row (A9001, R1, rating 4.0, 300.0 m).
+\subsubsection{Q02 --- Nearby Cultural Places (Gonçalo)}
+\textbf{Input and operation:} given an A2 accommodation, select B2 museums and monuments less than 400 m away.\par
+\textbf{Result:} one row per accommodation--place pair, with IDs, names, category, distance, original contact and optional normalised contact. Order by distance and place ID.\par
+\textbf{Case:} A9001 has museum C1 at 300 m, with null telephone contact, and monument C2 at 450 m, with a populated telephone contact.\par
+\textbf{Expected response:} only (A9001, C1, museum, 300.0 m, null contact).
+\subsubsection{Q03 --- Dining Options for Family Accommodations (Tiago)}
+\textbf{Operation:} select A2 accommodations with capacity for at least four guests and price up to 150 EUR; join with B1 restaurants less than 400 m away.\par
+\textbf{Result:} distinct pairs with IDs, names, capacity, price, restaurant rating and distance. Order by price, distance and IDs.\par
+\textbf{Case:} A9001 has capacity 4 and price 100; A9002 has capacity 2 and price 90. Both are 250 m from R1, rated 4.0.\par
+\textbf{Expected response:} only (A9001, R1, capacity 4, price 100, rating 4.0, 250.0 m).
+\subsubsection{Q04 --- Accommodations Near Museums (Tiago)}
+\textbf{Operation:} select B2 museums in the parish of Santa Maria Maior and join them with A2 accommodations with capacity for at least two guests, price up to 150 EUR and distance below 400 m.\par
+\textbf{Result:} distinct pairs with IDs, names, price, distance and optional museum contact. Order by museum ID, price, distance and accommodation ID.\par
+\textbf{Case:} museum C1 belongs to Santa Maria Maior and has a null telephone contact. A9001 (capacity 2, price 100) and A9002 (capacity 2, price 180) are 300 m away.\par
+\textbf{Expected response:} only (C1, A9001, price 100, 300.0 m, null contact).
+\subsection{Intermediate Queries}
+This level adds aggregation by entity or period, associative relations and preservation of unmatched groups. Measures are calculated before joins that could multiply rows.
+\subsubsection{Q05 --- Dining Options per Budget Accommodation (Gonçalo)}
+\textbf{Operation:} select Lisbon accommodations in A2 with price up to 150 EUR. In B1, obtain restaurants labelled \texttt{Portuguese} less than 400 m from each accommodation. Group distinct restaurants by accommodation and retain accommodations with at least one eligible restaurant.\par
+\textbf{Result:} accommodation ID and name, price, eligible restaurant count, count with known rating, mean known rating and distance to the nearest eligible restaurant. Order by price, descending mean (nulls last), minimum distance and ID.\par
+\textbf{Case:} A9001 costs 100 and A9002 costs 180. Both have R1 at 200 m and R2 at 300 m. R1 has label Portuguese and rating 4.0; R2 has Portuguese and Cafe and rating 4.8.\par
+\textbf{Expected response:} one row for A9001: price 100, two restaurants, two known ratings, mean 4.4 and minimum distance 200.0 m. R2's two labels leave the count at two.
+\subsubsection{Q06 --- Provision by Parish (Gonçalo)}
+\textbf{Operation:} group A2 accommodations with price up to 150 EUR by \texttt{location.\allowbreak{}neighbourhood}. Calculate accommodation count and mean reference amount per parish. Separately, count distinct B1 restaurants less than 400 m from any of those accommodations. Combine measures using an outer join from the accommodation groups. The unknown-parish group uses a null key. An accommodation's unknown position affects spatial search while preserving its contribution to the price group.\par
+\textbf{Result:} parish, accommodation count, mean price and distinct restaurant count; order by parish, with the unknown group last.\par
+\textbf{Case:} in parish F1, A9001 and A9002 cost 100 and 120 and share R1 at 250 m. In parish F2, A9003 costs 90 and has zero restaurants within the radius.\par
+\textbf{Expected response:} (F1, 2, 110, 1) and (F2, 1, 90, 0).
+\subsubsection{Q07 --- Monthly Restaurant Activity (Tiago)}
+\textbf{Operation:} in B1, aggregate visits with a restaurant destination from 1 September 2026 inclusive to 1 October 2026 exclusive, interpreted in Europe/Lisbon. Calculate visit count and the sum of \texttt{party\_\allowbreak{}size}. Preserve all catalogue restaurants through an outer join and select those with at least one A2 accommodation less than 400 m away. Count nearby accommodations separately.\par
+\textbf{Result:} restaurant ID and name, visit count, attendances and nearby accommodation count. Order by restaurant ID.\par
+\textbf{Case:} R1 has two visits in the period, by groups of 2 and 3, and two nearby accommodations. R2 has one nearby accommodation and zero visits in the period.\par
+\textbf{Expected response:} (R1, 2 visits, 5 attendances, 2 accommodations) and (R2, 0 visits, 0 attendances, 1 accommodation).
+\subsubsection{Q08 --- Both Visit Types in the Same Month (Tiago)}
+\textbf{Operation:} per B1 group representative and calendar month in Europe/Lisbon, require at least one restaurant visit and one cultural visit. Resolve cultural destinations in B2 and obtain A2 accommodations less than 400 m from each destination.\par
+\textbf{Result:} group representative and name, month, cultural place and accommodation, with their names and distance. One row per distinct combination (group representative, month, place, accommodation), ordered by that key.\par
+\textbf{Case:} P501 visits R1 on 5 September and C1 on 6 September; C1 resolves in B2 and A9001 is 300 m away. Two additional P501 visits to C1 in the same month repeat the same combination.\par
+\textbf{Expected response:} one row (P501, 2026-09, C1, A9001, 300.0 m).
+\subsection{Complex Queries}
+All four sources contribute to selection, measures or result context. Their combination requires aggregation at different granularities, conditional spatial selection, handling unknown values and, in Q09, statistical calculation; Q12 adds temporal event composition.
+\subsubsection{Q09 --- Food Mentions and Cultural Surroundings (Gonçalo)}
+\textbf{Operation:} select A2 accommodations less than 500 m from at least one B2 cultural record. For each accommodation, use recent A1 logical reviews with known, non-empty text. Let \(n_a\) be this count and \(m_a\) the count containing at least one token from \{\texttt{food}, \texttt{restaurant}, \texttt{breakfast}\}; calculate \(x_a=m_a/n_a\) for \(n_a>0\). In B1, calculate \(y_a\), the mean known rating of distinct restaurants less than 400 m away. Also count distinct cultural records within 500 m, \(c_a\). Retain accommodations with defined \(x_a\) and \(y_a\).
+
+\textbf{Result:} eligible accommodation count \(N\), mean \(c_a\) and Pearson correlation:
+\[
+r=\frac{\sum_a(x_a-\bar{x})(y_a-\bar{y})}
+{\sqrt{\sum_a(x_a-\bar{x})^2\sum_a(y_a-\bar{y})^2}}.
+\]
+For \(N<2\) or a zero denominator, \(r\) is null. The association is descriptive across the represented snapshots.
+
+\textbf{Case:} A9001 has one recent review containing \texttt{quiet}, one cultural place at 300 m and restaurants with mean rating 2.0. A9002 has three recent reviews, containing \texttt{food}, \texttt{restaurant} and \texttt{breakfast}, three cultural places less than 500 m away and a nearby mean restaurant rating of 4.0. A9003 is 800 m from any cultural place.\par
+\textbf{Expected response:} \(N=2\), cultural mean 2.0 and \(r=1\), for pairs \((0,2)\) and \((1,4)\). If both \(x_a\) values are 1, the correlation result is null.
+\subsubsection{Q10 --- Joint Selection of Options for Families (Tiago)}
+\textbf{Operation:} select A2 accommodations with capacity for at least three guests, Wi-Fi and price up to 180 EUR. Require at least two recent A1 logical reviews containing token \texttt{quiet} or \texttt{peaceful}. In B2, require at least one museum or monument less than 350 m away with a normalisable contact and select the nearest, breaking ties by ID. In B1, require at least two distinct restaurants labelled Portuguese, rated at least 4.2 and less than 350 m away. Aggregate restaurants and comments separately by accommodation.
+
+\textbf{Result:} accommodation and name, price, lexical match count, selected cultural record with distance and contact, eligible restaurant count and their mean rating. Order by descending restaurant mean, ascending price and accommodation ID.
+
+\textbf{Case:} A9001 has capacity 4, Wi-Fi and price 140; two recent reviews contain \texttt{quiet}; C1 is a museum at 200 m with telephone \texttt{213250800}; R1 and R2 are Portuguese restaurants, at 250 and 300 m, rated 4.3 and 4.5. A9002 satisfies the accommodation, text and restaurant conditions, but its only cultural place within the radius has a null contact.\par
+\textbf{Expected response:} one row for A9001, with price 140, two matches, C1 at 200.0 m, contact \texttt{+351213250800}, two restaurants and mean 4.4.
+\subsubsection{Q11 --- Textual Evidence and Local Provision (Gonçalo)}
+\textbf{Operation:} obtain A1 accommodations with at least one recent logical review containing \texttt{quiet}. In A2, require a resolved EUR reference price and valid position. In B2, select museums and monuments less than 400 m away, choosing the nearest record with ties broken by ID and retaining contact as an optional attribute. In B1, require at least one distinct restaurant less than 400 m away with a known rating of at least 4.0; calculate count and mean rating. Aggregate lexical matches before joining the other sources.
+
+\textbf{Result:} accommodation and name, price, lexical match count and one snippet from the most recently published matching comment (ties broken by ID), selected cultural place with distance and original/normalised contacts, restaurant count and mean rating. Order by descending lexical count, cultural distance and accommodation ID.
+
+\textbf{Case:} A9001 costs 110 and has a review dated 1 September 2026 containing \texttt{not quiet}. C1 is a monument at 300 m with telephone \texttt{4021}; C2 is 450 m away. R1 and R2 are less than 400 m away, rated 4.2 and 4.6.\par
+\textbf{Expected response:} one row for A9001: price 110, one match, snippet \texttt{not quiet}, C1 at 300.0 m, original \texttt{4021}, null normalised contact, two restaurants and mean 4.4.
+\subsubsection{Q12 --- Visit Sequence and Accommodation Context (Tiago)}
+\textbf{Operation:} from 1 September 2026 inclusive to 1 November 2026 exclusive, in Europe/Lisbon, obtain B1 restaurant visits linked to \texttt{fulfilled} reservations, with matching reservation, group representative and establishment, and cultural visits with destinations resolved in B2. Retain group representatives with at least one event of each type and combine their events into a sequence ordered by timestamp and visit ID.
+
+For each cultural event, search A2 for accommodations less than 400 m from the visited place, priced up to 150 EUR. In A1, require at least one recent logical review for each candidate and calculate review count, count of known individual scores and their simulated mean. Select the nearest eligible accommodation, breaking ties by ID. The association describes an accommodation option near the visited destination.
+
+\textbf{Result:} one row per group representative and event, with representative name, visit ID and type, timestamp, destination and name. Cultural events include original/normalised contact and the suggested accommodation, price, distance and A1 measures. A cultural event without a candidate retains null suggestion fields; restaurant events project only fields applicable to their type. Order by group representative, timestamp and visit ID.
+
+\textbf{Case:} P501 (Ana) has V1, a visit linked to a fulfilled reservation at R1 on 9 September 2026 at 12:05, and V2, a visit to C1 that day at 14:00, both in the Lisbon time zone. C1 resolves in B2 and has contact \texttt{+351 213 250 800 / 835}. A9001 is 250 m from C1, costs 110 and has three recent reviews with simulated scores 4, 5 and null. A9002 is 100 m away, costs 170 and has one recent review. P503, also Ana, has only a restaurant visit in the period.\par
+\textbf{Expected response:} two rows for P501, V1 followed by V2. V2 includes C1, contact \texttt{+351213250800} and its original, A9001, price 110, 250.0 m, three reviews, two known scores and simulated mean 4.5. P503's identity remains separate and that representative's event set is excluded from selection.

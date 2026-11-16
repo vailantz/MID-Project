@@ -1,0 +1,105 @@
+{
+  "status": "passed",
+  "executed_at": "2026-11-02T13:16:52+00:00",
+  "database": "tiago_culture_p1",
+  "state": "C:\\Users\\tiago\\OneDrive\\Documentos\\Mestrado\\MID\\Projeto\\Dev\\.runtime\\basex_p1",
+  "checks": [
+    "approved_xml_hash_and_working_copy",
+    "pinned_basex_12_4_jar",
+    "original_xml_valid_against_project_xsd",
+    "expected_record_and_category_counts",
+    "xsd_reject_name",
+    "xsd_reject_location_latitude",
+    "xsd_reject_location_longitude",
+    "xsd_reject_missing_name",
+    "xsd_reject_duplicate_id",
+    "xsd_reject_sourceRef",
+    "xsd_reject_category",
+    "xsd_reject_coordinateSystem",
+    "xsd_reject_generatedOn",
+    "xsd_reject_nil_with_content",
+    "database_matches_approved_xml",
+    "repeat_preparation_reuses_matching_database",
+    "simple_museum_query_exact",
+    "intermediate_count_query",
+    "complete_cultural_interface",
+    "basic_quality_no_blockers",
+    "semantic_quality_no_blockers",
+    "field_profile_telephone",
+    "field_profile_fax",
+    "field_profile_email",
+    "field_profile_website",
+    "field_profile_description",
+    "complex_contact_and_provenance_query",
+    "repeated_names_reported_not_merged",
+    "xsd_accepts_semantic_case_sourceRef",
+    "xquery_detects_semantic_case_sourceRef",
+    "xsd_accepts_semantic_case_id",
+    "xquery_detects_semantic_case_id",
+    "stale_database_detected_without_replacement",
+    "synthetic_cultural_targets_resolve_in_basex",
+    "unknown_cultural_target_detected",
+    "original_xml_xsd_and_scenario_unchanged"
+  ],
+  "postgresql_started": false,
+  "reused_existing_database": true,
+  "checks_passed": 36,
+  "xml_sha256": "0185748cede2d0383577ea74e062ac0ee268e15f6ac8b20d203c57718c492f0a",
+  "xsd_sha256": "96e1569db1e180a6b042ac0e1adcb340855db0d874eb65a1913f2fd75947a79d",
+  "basex_jar_sha256": "3975bc91acfadd1c139872dd9fc154f2fc7a166792509c7665501089edf5e301",
+  "counts": {
+    "museum": 67,
+    "monument": 63
+  },
+  "contactable_places": 76,
+  "field_profiles": {
+    "telephone": {
+      "missing": 0,
+      "nil": 57,
+      "blank": 0,
+      "placeholder": 0,
+      "usable": 73
+    },
+    "fax": {
+      "missing": 63,
+      "nil": 67,
+      "blank": 0,
+      "placeholder": 0,
+      "usable": 0
+    },
+    "email": {
+      "missing": 0,
+      "nil": 59,
+      "blank": 0,
+      "placeholder": 0,
+      "usable": 71
+    },
+    "website": {
+      "missing": 0,
+      "nil": 59,
+      "blank": 0,
+      "placeholder": 0,
+      "usable": 71
+    },
+    "description": {
+      "missing": 0,
+      "nil": 3,
+      "blank": 0,
+      "placeholder": 0,
+      "usable": 127
+    }
+  },
+  "repeated_names": {
+    "Palácio Fronteira": 2,
+    "Museu Nacional dos Coches": 2,
+    "Museu de Lisboa - Palácio Pimenta": 2,
+    "Palácio Nacional da Ajuda": 2
+  },
+  "synthetic_cultural_visits_checked": 7,
+  "limits": [
+    "Project XSD does not validate raw sourceFields individually.",
+    "Structural validity and usable contact text do not establish real-world truth or current availability.",
+    "Names are not identities. No deduplication or PostgreSQL queries performed."
+  ],
+  "finished_at": "2026-11-02T13:18:07+00:00"
+}

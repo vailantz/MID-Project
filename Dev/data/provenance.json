@@ -1,0 +1,53 @@
+{
+  "prepared_on": "2026-10-21",
+  "synthetic_scenario_as_of": "2026-10-21",
+  "source_sql_previous_zip_used": false,
+  "tripadvisor": {
+    "catalogue": "https://www.kaggle.com/datasets/stefanoleone992/tripadvisor-european-restaurants",
+    "original_format": "CSV in ZIP",
+    "snapshot": "May 2021",
+    "licence": "CC0 according to publisher; retained from accepted proposal",
+    "original_access_date": "2026-10-14",
+    "local_archive_sha256": "806e38fb0b7e568ed4f7fbde3766a8b504771603cf0527f3049f8c08b4680b53",
+    "csv_member": "tripadvisor_european_restaurants.csv",
+    "selection": "Eight fixed IDs, educational purposive sample",
+    "source_ids": [
+      "g189158-d10002838",
+      "g189158-d10003138",
+      "g189158-d10005260",
+      "g189158-d10005571",
+      "g189158-d10044675",
+      "g189158-d10130339",
+      "g189158-d10003850",
+      "g189158-d10087956"
+    ],
+    "sample_sha256": "c6b3baf75f123e939affe53a9e1b04885f998b889e452404cca671f778fe6d21",
+    "caveat": "cuisines mixes cuisine and venue-type labels; no exclusive category inferred"
+  },
+  "culture": {
+    "input": "Approved proposal XML, unchanged copy; municipal ArcGIS origins retained inside XML",
+    "sha256": "0185748cede2d0383577ea74e062ac0ee268e15f6ac8b20d203c57718c492f0a",
+    "records": 130,
+    "museum_records": 67,
+    "monument_records": 63
+  },
+  "sample_counts": {
+    "establishment": 8,
+    "establishment_label": 24,
+    "person": 6,
+    "reservation": 7,
+    "visit": 12
+  },
+  "synthetic_rules": {
+    "method": "Manually specified deterministic fixtures, no random generator",
+    "persons": "All fictional; same display_name does not imply same person",
+    "reservations": "All simulated, including fulfilled, cancelled, no_show and future confirmed",
+    "visits": "All simulated; includes walk-ins and culture. No claim about real visits.",
+    "party_size": "Includes the named person and unnamed companions; not unique visitor count",
+    "time_zone": "Europe/Lisbon; explicit offsets in fixtures; September is UTC+01"
+  },
+  "culture_demo_ids": {
+    "museum": "museum:0454d65e-4c82-40da-8ab4-37e865aa86a6",
+    "monument": "monument:005ffb1e-a50b-4893-891a-dc44d0693890"
+  }
+}

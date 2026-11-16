@@ -1,0 +1,14 @@
+\section{Preparing Virtual Integration}\label{sec:preparacao_integracao}
+The four sources provide local interfaces over which the P2 mediator will construct global views. The planned strategy is GAV (\emph{Global-As-View}): each global relation is defined as a view over the known sources, and queries are rewritten by unfolding those views\cite{doan2012principles}. Adapters will expose identifiers, attributes and quality indicators using common conventions.
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.1}
+\caption{Cross-source conflicts and integration decisions.}\label{tab:heterogeneidade}
+\begin{tabularx}{\textwidth}{p{2cm}p{4cm}X}\toprule\textbf{Type} & \textbf{Elements involved} & \textbf{P2 decision} \\\midrule
+Structural & A1/A2 documents and histories, B1 relations and B2 tree. & Adapters expose typed views; lists and observations retain their granularity until the operation that uses them. \\
+Structural & Account, listing, restaurant and cultural place keys. & Global identifier composed of source and local key. Linking people across subtopics requires an explicit, auditable match. \\
+Syntactic & International contact in A1, country/number in A2 and B2 text. & Apply the contact contract in Section~\ref{subsec:contratos_consultas}, preserving the received value and decision. \\
+Syntactic & Calendar dates, UTC timestamps and time-zoned B1 events. & Preserve calendar dates; compare timestamps after time-zone interpretation and display events in Europe/Lisbon. \\
+Semantic & Accommodation and restaurant ratings, and simulated individual scores. & Each measure retains its scale, assessed object and provenance. Queries identify the measure they aggregate. \\
+Semantic & Reference price and simulated nightly price. & Select source, context and monetary policy according to the quote model; carry the unit into the result. \\
+Semantic & A2/B2 parishes, B1 addresses and neighbourhoods; multi-category cultural records. & Geodesic joins using valid coordinates. Count records by local identifiers and audit place matches. \\
+Semantic & Nulls, invalid values and conflicts. & Carry status and provenance; apply the eligibility and aggregation conditions defined for each query. \\\bottomrule\end{tabularx}\end{table}
+The mediator should project required attributes early, push filters to sources and aggregate each set at its own granularity before spatial joins. Four-source queries combine textual evidence per accommodation, the document catalogue, relational provision or activity, and XML places. P2 validation will compare responses with the cases in Section~\ref{sec:consultas} and with source-unavailability tests.

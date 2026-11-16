@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.runtime/
+node_modules/
+*.zip
+Fontes/InsideAirbnb/MemberA2.json
+report/latex_orange/
+report/Report_P1_Tiago_Goncalo_orange.pdf

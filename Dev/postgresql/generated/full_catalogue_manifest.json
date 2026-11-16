@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-11-16T14:00:12+00:00",
+  "source_file": "Fontes\\Tripadvisor_Kaggle\\tripadvisor_lisboa.csv",
+  "source_sha256": "3bc43aca520c9db3cc780f85441cc60645235fbfe2b6eeb0dab9e9f09d511dd2",
+  "schema_sha256": "b75797daea0cc4b515dc12d12a4432d3b66c74527a7c91cc0193e71c24c6c79b",
+  "sample_provenance_sha256": "8d145df99ba55f7e194c11e330d5fbb2d5f9bb609f79c993b827d413436d688e",
+  "sql_file": "postgresql\\generated\\full_catalogue.sql",
+  "sql_sha256": "569a02bbaecad3329b3e22c9745d20b8e485b7b688d9e78f05072f2a947658ff",
+  "expected_counts": {
+    "establishment": 5261,
+    "establishment_label": 12167,
+    "person": 0,
+    "reservation": 0,
+    "visit": 0
+  },
+  "id_policy": "Sample IDs 1..8 preserved; remaining source IDs sorted lexicographically. Rebuilding from a changed source may change other local IDs.",
+  "preserved_sample_ids": {
+    "g189158-d10002838": 1,
+    "g189158-d10003138": 2,
+    "g189158-d10005260": 3,
+    "g189158-d10005571": 4,
+    "g189158-d10044675": 5,
+    "g189158-d10130339": 6,
+    "g189158-d10003850": 7,
+    "g189158-d10087956": 8
+  },
+  "scope": "Real historical catalogue only. No synthetic activity imported.",
+  "geographic_policy": "Original coordinates retained, including questionable cases; no municipal filter or imputation.",
+  "null_policy": "Blank numeric fields and blank addresses become NULL. No fabricated labels."
+}

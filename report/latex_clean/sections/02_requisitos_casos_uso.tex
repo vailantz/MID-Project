@@ -1,0 +1,57 @@
+\section{Requirements and Use Cases}
+\label{sec:requisitos}
+\subsection{Glossary and Domain Rules}
+\begin{description}
+\item[Accommodation listing.] An advertisement with capacity, property type, amenities, location and aggregate ratings in A2.
+\item[Review.] A guest comment associated with a listing and an account, with a publication date. This date identifies publication of the comment.
+\item[Person.] The source account profile in A1/A2, identified consistently in its author and host roles. In B1, the person is the group representative in the reservation and visit scenario. Each domain retains its own identifier namespace.
+\item[Owner.] The host role in A2, modelled as an entity linked to Person. The exercise associates the account responsible for each listing with an owner, a simulated identification document, activity status and a document-validity assessment.
+\item[Price quote.] A family of monetary observations from one origin for an accommodation listing. Each observation combines amount, currency, stay dates when known, billing basis, fee inclusion and observation time.
+\item[Observation.] Values received for an entity, accompanied by an observation identity, provenance and a timestamp when available. The history preserves versions and repetitions.
+\item[Restaurant.] A georeferenced establishment in B1, with cuisine labels and an aggregate rating from the source.
+\item[Cultural place.] A B2 record classified as a museum or monument, with location and institutional contacts.
+\item[Reservation and visit.] A reservation is an advance restaurant booking. A visit records the group representative's attendance and party size, with an exclusive destination: a restaurant or a cultural place.
+\item[Owner activity.] At least one logical review published since 1 January 2025 on any listing belonging to that owner. The scenario assessment uses 13 November 2026 as its reference date.
+\item[Proximity.] Approximate geodesic distance between WGS84 coordinates. Listing coordinates include the anonymisation applied by the source; the radius characterises geographical neighbourhood.
+\end{description}
+
+\subsection{Actors, Use Cases and Functional Requirements}
+Visitors seek accommodation, dining and cultural options. Analysts study the available amenities and recorded activity patterns. Data managers monitor quality and owner identification. Table~\ref{tab:atores_casos_uso} summarises these goals; the precise conditions of each query are specified in Section~\ref{sec:consultas}.
+
+\begin{table}[!htbp]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.1}
+\caption{Use cases, functional requirements and traceability.}\label{tab:atores_casos_uso}
+\begin{tabularx}{\textwidth}{p{2cm}lX p{2cm}}
+\toprule
+\textbf{Actor} & \textbf{UC / FR} & \textbf{Goal} & \textbf{Validation} \\
+\midrule
+Visitor & 01 / 01 & Discover restaurants and cultural places near a listing. & Q01--Q04 \\
+Visitor & 02 / 02 & Compare affordable listings by nearby dining options. & Q05 \\
+Analyst & 03 / 03 & Summarise local amenities by area and monthly restaurant activity. & Q06, Q07 \\
+Analyst & 04 / 04 & Relate restaurant and cultural visits to accommodation options. & Q08, Q12 \\
+Analyst & 05 / 05 & Study associations between review mentions and local amenities. & Q09 \\
+Visitor & 06 / 06 & Select combinations of accommodation, culture and dining with textual evidence. & Q10, Q11 \\
+Manager & 07 / 07 & Audit anomalies, histories, references and document validity for active owners. & Section~\ref{sec:povoamento_qualidade} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Data Quality Requirements}
+The following requirements define the assessment criteria. Section~\ref{sec:povoamento_qualidade} presents the anomalies, applied rules and observed results.
+\begin{enumerate}
+\item \textbf{DQR-01 --- Validity:} check types, formats and domains for coordinates, ratings, contacts, dates and monetary values.
+\item \textbf{DQR-02 --- Completeness:} represent unknown values explicitly and measure their occurrence. Treat latitude and longitude as a pair.
+\item \textbf{DQR-03 --- Identity and uniqueness:} maintain one key per logical entity and a unique document identifier per owner. Shared names and contacts require additional evidence for entity matching.
+\item \textbf{DQR-04 --- Consistency:} check references, chronology and reservation/visit states, together with agreement between activity, document validity and reference dates.
+\item \textbf{DQR-05 --- Semantics:} preserve the scale and context of each rating and price observation.
+\item \textbf{DQR-06 --- Provenance:} identify origin, declared licence, acquisition date, generated fields, seeds and the files used in each execution.
+\end{enumerate}
+
+\subsection{Non-functional Requirements}
+\begin{itemize}
+\item \textbf{NFR-01 --- Reproducibility:} prepare, load and verify sources using the requirements and workflow outlined in Appendix~\ref{ap:execucao}.
+\item \textbf{NFR-02 --- Autonomy:} retain the four engines and their local schemas; adapters will provide access interfaces for P2.
+\item \textbf{NFR-03 --- Robustness:} apply explicit contracts for unknown, invalid and conflicting values, with traceable decisions.
+\item \textbf{NFR-04 --- Conventions:} use WGS84 coordinates, ISO 8601 calendar dates and timestamps with explicit time zones. B1 events are presented in Europe/Lisbon; synthetic observation timestamps in A1/A2 are stored in UTC.
+\end{itemize}

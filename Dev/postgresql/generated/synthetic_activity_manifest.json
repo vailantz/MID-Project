@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-11-16T13:58:31+00:00",
+  "scenario_as_of": "2026-10-21T23:59:59+01:00",
+  "is_synthetic": true,
+  "fixture_sha256": "4e24e4e7db2f587607a09055a8f19285033f15395ab810be1771576d7839f57e",
+  "xml_sha256": "0185748cede2d0383577ea74e062ac0ee268e15f6ac8b20d203c57718c492f0a",
+  "catalogue_sql_sha256": "569a02bbaecad3329b3e22c9745d20b8e485b7b688d9e78f05072f2a947658ff",
+  "sql_sha256": "fdb071d12b86020505b2a5f1513e31ffc994aa8de48c7259e33767ac5d9485ff",
+  "expected_counts": {
+    "person": 12,
+    "reservation": 19,
+    "visit": 28
+  },
+  "reservation_status_counts": {
+    "fulfilled": 12,
+    "cancelled": 2,
+    "no_show": 2,
+    "confirmed": 3
+  },
+  "cultural_visits": 7,
+  "limits": "Small deterministic fictional scenario; not representative of real demand. XML references validated outside PostgreSQL."
+}

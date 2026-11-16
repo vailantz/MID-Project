@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "xml_records": 130,
+  "checks_passed": 5,
+  "checks": [
+    "original_catalogue_valid",
+    "missing_name_rejected",
+    "latitude_out_of_range_rejected",
+    "duplicate_place_id_rejected",
+    "unknown_source_rejected"
+  ],
+  "scope": "Project XSD 1.0: common structure, types, coordinate bounds, keys and source references",
+  "limits": [
+    "Raw sourceFields are preserved without field-specific validation",
+    "Schema validation does not establish the real-world truth or freshness of values"
+  ]
+}
