@@ -1,6 +1,6 @@
 # Virtual Data Integration System for Accommodation and Local Discovery in Lisbon — Project P1
 
-This repository contains the work developed for the **Data Modelling and Integration (DMI)** course (Master's in Informatics Engineering, Universidade do Algarve), focused on the design, implementation, population, and quality assessment of autonomous heterogeneous local data sources in Lisbon (**Project P1**), preparing the foundation for virtual data integration in **Project P2**.
+This repository contains the work developed for the **Data Modelling and Integration (DMI)** course (Master's in Informatics Engineering, UALG), focused on the design, implementation, population, and quality assessment of autonomous heterogeneous local data sources in Lisbon, preparing the foundation for virtual data integration.
 
 The core goal is to model and query complementary urban tourism subtopics across four distinct storage paradigms while preserving source autonomy, provenance, and declarative integrity:
 
@@ -15,7 +15,7 @@ The core goal is to model and query complementary urban tourism subtopics across
 
 The formal academic report for **Project P1** is available in [`report/`](report/):
 
-- **[English Report (PDF)](report/Report_P1_Tiago_Goncalo_English.pdf)** — Compiled Project P1 report
+- **[English Report (PDF)](report/Report_P1.pdf)** — Compiled Project P1 report
 - Complete LaTeX source files (`main.tex`, `sections/`), ER diagrams (`der_tiago.png`, `der_goncalo_owner_en.pdf`), and bibliography are maintained in [`report/`](report/).
 
 ---
@@ -24,7 +24,7 @@ The formal academic report for **Project P1** is available in [`report/`](report
 
 | Directory / File | Description |
 | :--- | :--- |
-| [`report/`](report/) | Compiled Project P1 report ([`Report_P1_Tiago_Goncalo_English.pdf`](report/Report_P1_Tiago_Goncalo_English.pdf)), ER diagrams ([`der_tiago.png`](report/der_tiago.png), [`der_goncalo_owner_en.pdf`](report/der_goncalo_owner_en.pdf)), and complete LaTeX source files ([`main.tex`](report/main.tex), [`sections/`](report/sections/)). |
+| [`report/`](report/) | Compiled Project P1 report ([`Report_P1.pdf`](report/Report_P1.pdf)), ER diagrams ([`der_tiago.png`](report/der_tiago.png), [`der_goncalo_owner_en.pdf`](report/der_goncalo_owner_en.pdf)), and complete LaTeX source files ([`main.tex`](report/main.tex), [`sections/`](report/sections/)). |
 | [`Dev/`](Dev/) | Implementation of **Sources B1 (PostgreSQL 16)** and **B2 (BaseX 12.4 XML)**: schemas, profiling/loading/validation scripts, SQL & XQuery queries, synthetic activity fixtures, and validation reports. |
 | [`Dev/data/`](Dev/data/) | Municipal cultural XML working copy (`cultural_catalogue.xml`), deterministic synthetic activity fixtures (`synthetic_activity.json`), and SHA-256 provenance manifest (`provenance.json`). |
 | [`Dev/postgresql/`](Dev/postgresql/) | Relational 3NF schema (`01_schema.sql`), deterministic generated SQL (`generated/full_catalogue.sql`, `generated/synthetic_activity.sql`), quality checks (`04_quality.sql`), GAV views (`05_views_and_unfolding.sql`), and P1 activity queries (`06_p1_activity_queries.sql`). |
@@ -83,7 +83,7 @@ python -X utf8 scripts/check_basex_p1.py
 powershell -ExecutionPolicy Bypass -File scripts/basex_p1.ps1 -i tiago_culture_p1 -Q xml_basex/01_museums.xq
 ```
 
-> **Interactive Inspection Note:** Append `--keep-open` to `python -X utf8 scripts/check_full_catalogue.py --with-activity --keep-open` to keep the isolated PostgreSQL instance running on `127.0.0.1:55441` (`database=tiago_p1`, `user=dmi_p1`, `schema=tiago_lab`) for live inspection during demonstrations.
+> **Interactive Inspection Note:** Append `--keep-open` to `python -X utf8 scripts/check_full_catalogue.py --with-activity --keep-open` to keep the isolated PostgreSQL instance running on `127.0.0.1:55441` (`database=tiago_p1`, `user=dmi_p1`, `schema=tiago_lab`) for live inspection during use.
 
 ### Step 3: Run & Validate Sources A1 (Elasticsearch) and A2 (MongoDB)
 From the `z_Code/` package directory:
