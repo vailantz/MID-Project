@@ -26,6 +26,7 @@ The formal academic report for **Project P1** is available in [`report/`](report
 | :--- | :--- |
 | [`report/`](report/) | Compiled Project P1 report ([`Report_P1.pdf`](report/Report_P1.pdf)), ER diagrams ([`der_tiago.png`](report/der_tiago.png), [`der_goncalo_owner_en.pdf`](report/der_goncalo_owner_en.pdf)), and complete LaTeX source files ([`main.tex`](report/main.tex), [`sections/`](report/sections/)). |
 | [`Dev/`](Dev/) | Implementation of **Sources B1 (PostgreSQL 16)** and **B2 (BaseX 12.4 XML)**: schemas, profiling/loading/validation scripts, SQL & XQuery queries, synthetic activity fixtures, and validation reports. |
+| [`Dev/run.cmd`](Dev/run.cmd) | Make-style shortcut runner (`run all`, `run pg`, `run sql`, `run psql`, `run xml`, `run xquery`, `run clean`) with automatic UTF-8 configuration. |
 | [`Dev/data/`](Dev/data/) | Municipal cultural XML working copy (`cultural_catalogue.xml`), deterministic synthetic activity fixtures (`synthetic_activity.json`), and SHA-256 provenance manifest (`provenance.json`). |
 | [`Dev/postgresql/`](Dev/postgresql/) | Relational 3NF schema (`01_schema.sql`), deterministic generated SQL (`generated/full_catalogue.sql`, `generated/synthetic_activity.sql`), quality checks (`04_quality.sql`), GAV views (`05_views_and_unfolding.sql`), and P1 activity queries (`06_p1_activity_queries.sql`). |
 | [`Dev/xml_basex/`](Dev/xml_basex/) | XML Schema (`catalogue.xsd`) and XQuery scripts (`01_museums.xq` to `06_p1_quality.xq`) over the municipal cultural catalogue (`Dev/data/cultural_catalogue.xml`). |
@@ -60,30 +61,21 @@ cd MID-Project
 ```
 
 ### Step 2: Run & Validate Sources B1 (PostgreSQL) and B2 (BaseX XML)
-From [`Dev/`](Dev/):
+From [`Dev/`](Dev/), use the [`run.cmd`](Dev/run.cmd) shortcut runner (works in both CMD and PowerShell with UTF-8 preconfigured):
 
-```powershell
+```cmd
 cd Dev
 
-# 1. Profile the original Lisbon CSV extract (5,261 establishments) and generate the quality report
-python -X utf8 scripts/profile_source.py
-
-# 2. Generate deterministic SQL scripts for the real catalogue and synthetic activity scenario
-python -X utf8 scripts/prepare_full_catalogue.py
-python -X utf8 scripts/prepare_synthetic_activity.py
-
-# 3. Launch an isolated PostgreSQL instance (port 55441, db tiago_p1), load data, and run all 16 + 38 checks
-python -X utf8 scripts/check_full_catalogue.py
-python -X utf8 scripts/check_full_catalogue.py --with-activity
-
-# 4. Validate XML against XSD, build the BaseX database (tiago_culture_p1, 130 places), and run all 36 checks
-python -X utf8 scripts/check_basex_p1.py
-
-# 5. Execute individual XQuery scripts against the BaseX database
-powershell -ExecutionPolicy Bypass -File scripts/basex_p1.ps1 -i tiago_culture_p1 -Q xml_basex/01_museums.xq
+run           # Display all available shortcut commands
+run all       # Run full pipeline (CSV profile + 38 PostgreSQL checks + 36 BaseX XML checks)
+run profile   # Profile the original Lisbon CSV extract (5,261 establishments)
+run pg        # Launch isolated PostgreSQL B1 (port 55441), run 38 checks, and keep open
+run sql       # Execute P1 SQL queries (06_p1_activity_queries.sql) against open instance
+run psql      # Open interactive PostgreSQL shell (tiago_p1=#) in UTF-8
+run xml       # Validate XML against XSD and run all 36 BaseX B2 checks
+run xquery    # Execute BaseX XQuery scripts (02_counts.xq, 01_museums.xq, or custom .xq)
+run clean     # Clean temporary runtime folders (.runtime and __pycache__)
 ```
-
-> **Interactive Inspection Note:** Append `--keep-open` to `python -X utf8 scripts/check_full_catalogue.py --with-activity --keep-open` to keep the isolated PostgreSQL instance running on `127.0.0.1:55441` (`database=tiago_p1`, `user=dmi_p1`, `schema=tiago_lab`) for live inspection during use.
 
 ### Step 3: Run & Validate Sources A1 (Elasticsearch) and A2 (MongoDB)
 From the `z_Code/` package directory:
