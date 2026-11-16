@@ -1,7 +1,7 @@
 @echo off
 chcp 65001 >nul
 set PGCLIENTENCODING=UTF8
-set PAGER=cat
+set PAGER=
 set PG_BIN=C:\Program Files\PostgreSQL\16\bin
 set PORT=55441
 
@@ -59,14 +59,14 @@ exit /b %ERRORLEVEL%
 
 :sql
 if "%~2"=="" (
-    "%PG_BIN%\psql.exe" -h 127.0.0.1 -p %PORT% -U dmi_p1 -d tiago_p1 -v PAGER=cat -f "%~dp0postgresql\06_p1_activity_queries.sql"
+    "%PG_BIN%\psql.exe" -h 127.0.0.1 -p %PORT% -U dmi_p1 -d tiago_p1 -P pager=off -f "%~dp0postgresql\06_p1_activity_queries.sql"
 ) else (
-    "%PG_BIN%\psql.exe" -h 127.0.0.1 -p %PORT% -U dmi_p1 -d tiago_p1 -v PAGER=cat -f "%~dp0postgresql\%~2"
+    "%PG_BIN%\psql.exe" -h 127.0.0.1 -p %PORT% -U dmi_p1 -d tiago_p1 -P pager=off -f "%~dp0postgresql\%~2"
 )
 exit /b %ERRORLEVEL%
 
 :psql
-"%PG_BIN%\psql.exe" -h 127.0.0.1 -p %PORT% -U dmi_p1 -d tiago_p1 -v PAGER=cat
+"%PG_BIN%\psql.exe" -h 127.0.0.1 -p %PORT% -U dmi_p1 -d tiago_p1 -P pager=off
 exit /b %ERRORLEVEL%
 
 :xml
