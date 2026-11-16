@@ -27,10 +27,10 @@ echo.
 echo   run all       - Corre TUDO automaticamente (CSV + 38 testes PG + 36 testes XML)
 echo   run profile   - Mostra o perfil de qualidade do CSV de Lisboa (5.261 registos)
 echo   run pg        - Valida e abre a base PostgreSQL B1 (fica aberta para mostrar)
-echo   run sql       - Executa as consultas SQL da P1 (06_p1_activity_queries.sql)
+echo   run sql       - Mostra o resultado formatado das 3 consultas SQL da P1 (Fonte B1)
 echo   run psql      - Abre a consola interativa do PostgreSQL (tiago_p1=#) em UTF-8
 echo   run xml       - Valida o XSD e corre os 36 testes do BaseX XML (Fonte B2)
-echo   run xquery    - Executa as consultas XQuery no BaseX (museus, contagens, etc.)
+echo   run xquery    - Mostra o resultado formatado das 6 consultas XQuery (Fonte B2)
 echo   run clean     - Limpa os ficheiros temporarios (.runtime e __pycache__)
 echo.
 echo ============================================================================
@@ -58,11 +58,7 @@ python -X utf8 "%~dp0scripts\check_full_catalogue.py" --with-activity --keep-ope
 exit /b %ERRORLEVEL%
 
 :sql
-if "%~2"=="" (
-    "%PG_BIN%\psql.exe" -h 127.0.0.1 -p %PORT% -U dmi_p1 -d tiago_p1 -P pager=off -f "%~dp0postgresql\06_p1_activity_queries.sql"
-) else (
-    "%PG_BIN%\psql.exe" -h 127.0.0.1 -p %PORT% -U dmi_p1 -d tiago_p1 -P pager=off -f "%~dp0postgresql\%~2"
-)
+python -X utf8 "%~dp0scripts\show_queries.py" sql
 exit /b %ERRORLEVEL%
 
 :psql
@@ -74,18 +70,7 @@ python -X utf8 "%~dp0scripts\check_basex_p1.py"
 exit /b %ERRORLEVEL%
 
 :xquery
-if not exist "%~dp0.runtime\basex_p1\data\tiago_culture_p1" (
-    python -X utf8 "%~dp0scripts\check_basex_p1.py"
-)
-if "%~2"=="" (
-    echo --- [02_counts.xq] Contagem por categoria ---
-    powershell -ExecutionPolicy Bypass -File "%~dp0scripts\basex_p1.ps1" -i tiago_culture_p1 -Q "%~dp0xml_basex\02_counts.xq"
-    echo.
-    echo --- [01_museums.xq] Lista dos 67 museus ---
-    powershell -ExecutionPolicy Bypass -File "%~dp0scripts\basex_p1.ps1" -i tiago_culture_p1 -Q "%~dp0xml_basex\01_museums.xq"
-) else (
-    powershell -ExecutionPolicy Bypass -File "%~dp0scripts\basex_p1.ps1" -i tiago_culture_p1 -Q "%~dp0xml_basex\%~2"
-)
+python -X utf8 "%~dp0scripts\show_queries.py" xquery %~2
 exit /b %ERRORLEVEL%
 
 :clean
