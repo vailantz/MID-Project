@@ -34,12 +34,9 @@ The project models and prepares four heterogeneous data sources covering tourism
 │   ├── scripts/                              # Deterministic preparation & validation pipelines
 │   ├── tools/                                # BaseX 12.4 standalone engine
 │   └── results/                              # Automated validation logs & query outputs
-├── z_Code/                                   # Subtopic A implementation (Elasticsearch A1 + MongoDB A2)
-│   ├── docker-compose.yml                    # Container orchestration for MongoDB & Elasticsearch
-│   └── p1_a1_a2/                             # Loader, index mappings, JSON Schema & validation scripts
 ├── Fontes/                                   # Preserved raw datasets & provenance manifests
 │   ├── Camara_Municipal/                     # Lisbon Municipal Open Data (Museums & National Monuments)
-│   ├── InsideAirbnb/                         # Inside Airbnb Lisbon listings & reviews
+│   ├── InsideAirbnb/                         # Inside Airbnb Lisbon listings & reviews (Sources A1 & A2)
 │   └── Tripadvisor_Kaggle/                   # TripAdvisor European Restaurants (Lisbon extract)
 └── Docs/                                     # Course assignment specification & initial proposal
 ```
@@ -60,7 +57,7 @@ python -X utf8 scripts/check_basex_p1.py
 ```
 
 ### Subtopic A — Elasticsearch (`A1`) & MongoDB (`A2`)
-Requires **Docker** and **Python 3.11+**. From `z_Code/`:
+Requires **Docker** and **Python 3.11+**. Executed via the Subtopic A loader package (`z_Code/`):
 
 ```bash
 docker compose up -d
