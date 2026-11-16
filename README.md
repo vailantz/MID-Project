@@ -1,70 +1,98 @@
-# Sistema Virtual de Integração de Dados para Alojamento e Descoberta Local em Lisboa — Projeto P1
+# Virtual Data Integration System for Accommodation and Local Discovery in Lisbon — Project P1
 
-**Unidade Curricular:** Modelação e Integração de Dados (2026/2027) — Mestrado em Engenharia Informática, Universidade do Algarve  
-**Docente:** Prof.ª Doutora Paula Cristina Negrão Ventura Martins  
-**Grupo:**
-- **Gonçalo Serafim (N.º 79189)** — Subtópico A: *Alojamento, Avaliações de Hóspedes e Cotações de Preço* (Fontes **A1** em Elasticsearch e **A2** em MongoDB)
-- **Tiago Alexandre Vailant (N.º 79922)** — Subtópico B: *Oferta Cultural, Restauração e Atividade Local* (Fontes **B1** em PostgreSQL e **B2** em BaseX XML)
+This repository contains the work developed for the **Data Modelling and Integration (DMI)** course (Master's in Informatics Engineering, Universidade do Algarve), focused on the design, implementation, population, and quality assessment of autonomous heterogeneous local data sources in Lisbon (**Project P1**), preparing the foundation for virtual data integration in **Project P2**.
+
+The core goal is to model and query complementary urban tourism subtopics across four distinct storage paradigms while preserving source autonomy, provenance, and declarative integrity:
+
+- **Source B1 — Restaurants & Local Activity (PostgreSQL 16):** Relational catalogue of 5,261 Lisbon dining establishments and 12,167 cuisine/venue-type label associations (Tripadvisor snapshot), paired with a deterministic activity scenario (12 group representatives, 19 reservations, and 28 visits) enforced by natural composite candidate keys and declarative `CHECK` / `FOREIGN KEY` constraints.
+- **Source B2 — Cultural Heritage (BaseX 12.4 Native XML):** Hierarchical XML catalogue of 130 municipal cultural records (67 museums and 63 monuments from Câmara Municipal de Lisboa), validated against `catalogue.xsd` (`xs:key` / `xs:keyref`, `xsi:nil`) and queried via XPath and XQuery.
+- **Source A1 — Guest Reviews Corpus (Elasticsearch):** Inverted lexical (BM25) and optional vector (`int8_hnsw`, 1,024-dim Qwen3-Embedding-4B) index over 1,950,076 logical guest reviews (1,964,992 observations) and 1,762,796 person profiles from Inside Airbnb.
+- **Source A2 — Accommodation & Price Quotes (MongoDB):** Document database storing 25,020 accommodation listings, 9,484 host/owner profiles with identity-document validation, and 23,661 price-quote families (24,861 monetary observations), with `2dsphere` geospatial indexing and JSON Schema validators.
 
 ---
 
-## 1. Estrutura do Projeto
+## Report
 
-| Diretório / Ficheiro | Descrição |
+The formal academic report for **Project P1** is available in [`report/`](report/):
+
+- **[English Report (PDF)](report/Report_P1_Tiago_Goncalo_English.pdf)** — Compiled Project P1 report
+- Complete LaTeX source files, ER diagrams, and bibliography are maintained in [`report/latex_clean/`](report/latex_clean/).
+
+---
+
+## Repository Structure
+
+| Directory / File | Description |
 | :--- | :--- |
-| [`report/`](report/) | Relatório da Fase P1: PDFs compilados ([`Report_P1_Tiago_Goncalo_clean.pdf`](report/Report_P1_Tiago_Goncalo_clean.pdf) e [`Report_P1_Tiago_Goncalo_orange.pdf`](report/Report_P1_Tiago_Goncalo_orange.pdf)) e respetivas pastas de código LaTeX ([`report/latex_clean/`](report/latex_clean/) e [`report/latex_orange/`](report/latex_orange/)). |
-| [`Dev/`](Dev/README.md) | Implementação das fontes **B1 (PostgreSQL 16)** e **B2 (BaseX 12.4 XML)** de Tiago Vailant: esquemas, scripts de perfilagem/carga/verificação, consultas SQL e XQuery, dados sintéticos e relatórios de validação. |
-| [`Dev/models/`](Dev/models/) | Diagramas concetuais ([`der_tiago.png`](Dev/models/der_tiago.png), [`der_goncalo.png`](Dev/models/der_goncalo.png)), especificações dos modelos lógicos/físicos (`04_postgresql_p1.md`, `05_cenario_sintetico_p1.md`, `06_xml_basex_p1.md`) e catálogo das consultas (`03_consultas_p1.md`). |
-| [`Dev/postgresql/`](Dev/postgresql/README_P1.md) | Esquema relacional 3NF (`01_schema.sql`), scripts SQL gerados (`generated/full_catalogue.sql`, `generated/synthetic_activity.sql`) e consultas locais (`03_queries.sql`, `04_quality.sql`, `05_views_and_unfolding.sql`). |
-| [`Dev/xml_basex/`](Dev/xml_basex/README_P1.md) | Esquema XML (`catalogue.xsd`), catálogo municipal (`data/cultural_catalogue.xml`), manifesto de proveniência (`data/provenance.json`) e 6 consultas XQuery (`01_museums.xq` a `06_p1_quality.xq`). |
-| [`Dev/scripts/`](Dev/scripts/) | Scripts Python/PowerShell de perfilagem, preparação e verificação automatizada (`profile_source.py`, `prepare_full_catalogue.py`, `prepare_synthetic_activity.py`, `check_full_catalogue.py`, `check_basex_p1.py`, `basex_p1.ps1`). |
-| [`Fontes/`](Fontes/) | Conjuntos de dados originais preservados sem alterações (`Tripadvisor_Kaggle/`, `Camara_Municipal/`, `InsideAirbnb/`) e notas de proveniência. |
-| [`Docs/`](Docs/) | Enunciado oficial (`DMI_Projects_2026_2027.pdf`) e proposta aceite (`project_proposal.pdf`). |
-| `z_Code/` | Pacote autónomo das fontes **A1 (Elasticsearch)** e **A2 (MongoDB)** de Gonçalo Serafim (`setup.ps1`, `database/`, `scripts/`, `models/`). |
+| [`report/`](report/) | Compiled Project P1 report ([`Report_P1_Tiago_Goncalo_English.pdf`](report/Report_P1_Tiago_Goncalo_English.pdf)) and complete LaTeX source files ([`report/latex_clean/`](report/latex_clean/)). |
+| [`Dev/`](Dev/README.md) | Implementation of **Sources B1 (PostgreSQL 16)** and **B2 (BaseX 12.4 XML)**: schemas, profiling/loading/validation scripts, SQL & XQuery queries, synthetic activity fixtures, and validation reports. |
+| [`Dev/models/`](Dev/models/) | Conceptual ER diagrams ([`der_tiago.png`](Dev/models/der_tiago.png), [`der_goncalo_owner_en.pdf`](Dev/models/der_goncalo_owner_en.pdf)) and logical/physical model specifications (`04_postgresql_p1.md` to `07_requisitos_p1.md`). |
+| [`Dev/postgresql/`](Dev/postgresql/README_P1.md) | Relational schema (`01_schema.sql`), sample dataset (`02_sample_data.sql`), deterministic generated SQL (`generated/full_catalogue.sql`, `generated/synthetic_activity.sql`), and local SQL queries (`03_queries.sql` to `06_p1_activity_queries.sql`). |
+| [`Dev/xml_basex/`](Dev/xml_basex/README_P1.md) | XML Schema (`catalogue.xsd`) and XQuery scripts (`01_museums.xq` to `06_p1_quality.xq`) over the municipal cultural catalogue (`Dev/data/cultural_catalogue.xml`). |
+| [`Dev/scripts/`](Dev/scripts/) | Automated Python and PowerShell preparation and verification scripts (`profile_source.py`, `prepare_full_catalogue.py`, `prepare_synthetic_activity.py`, `check_full_catalogue.py`, `check_basex_p1.py`, `basex_p1.ps1`). |
+| [`Dev/results/`](Dev/results/) | Consolidated execution logs, SHA-256 provenance manifests, XML/XQuery outputs (`basex_p1/`), and JSON validation reports. |
+| [`Fontes/`](Fontes/) | Preserved original datasets and provenance metadata (`Tripadvisor_Kaggle/`, `Camara_Municipal/`, `InsideAirbnb/`). |
+| [`Docs/`](Docs/) | Official course project brief ([`DMI_Projects_2026_2027.pdf`](Docs/DMI_Projects_2026_2027.pdf)) and project proposal ([`project_proposal.pdf`](Docs/project_proposal.pdf)). |
 
 ---
 
-## 2. Instruções de Instalação, Povoamento e Verificação
+## Requirements
 
-### 2.1 Fontes B1 (PostgreSQL) e B2 (BaseX XML) — Tiago Vailant (`Dev/`)
+### Sources B1 & B2 (`Dev/`)
+- **OS:** Windows x64
+- **Python:** $\ge 3.11$ (with `lxml` for XSD validation)
+- **PostgreSQL:** $\ge 16$ (`initdb`, `pg_ctl`, `psql`, `createdb` binaries)
+- **Java & BaseX:** Java $\ge 17$ (uses the self-contained `Dev/tools/BaseX124.jar` included in the repository)
 
-**Pré-requisitos:** Windows x64, Python 3.11+ (com pacote `lxml`), PostgreSQL 16+ (`initdb`, `pg_ctl`, `psql`) e Java 17+ (usa `Dev/tools/BaseX124.jar` incluído).
+### Sources A1 & A2 (`z_Code/`)
+- **OS:** Windows x64
+- **Python:** $\ge 3.10$
+- **Services:** MongoDB and Elasticsearch (pinned versions managed by `setup.ps1`)
 
-A partir da pasta [`Dev/`](Dev/):
+---
+
+## Reproducibility & Quickstart Guide
+
+### Step 1: Clone the Repository
+```powershell
+git clone https://github.com/vailantz/MID-Project.git
+cd MID-Project
+```
+
+### Step 2: Run & Validate Sources B1 (PostgreSQL) and B2 (BaseX XML)
+From [`Dev/`](Dev/):
 
 ```powershell
-# 1. Perfilar o CSV original de Lisboa (5 261 estabelecimentos) e gerar o relatório de qualidade
+cd Dev
+
+# 1. Profile the original Lisbon CSV extract (5,261 establishments) and generate the quality report
 python -X utf8 scripts/profile_source.py
 
-# 2. Gerar os scripts SQL determinísticos do catálogo real e do cenário sintético de atividade
+# 2. Generate deterministic SQL scripts for the real catalogue and synthetic activity scenario
 python -X utf8 scripts/prepare_full_catalogue.py
 python -X utf8 scripts/prepare_synthetic_activity.py
 
-# 3. Iniciar instância PostgreSQL isolada (porta 55441, base tiago_p1), carregar dados e validar (16 + 37 controlos)
+# 3. Launch an isolated PostgreSQL instance (port 55441, db tiago_p1), load data, and run all 16 + 38 checks
+python -X utf8 scripts/check_full_catalogue.py
 python -X utf8 scripts/check_full_catalogue.py --with-activity
 
-# 4. Validar XSD, criar a base BaseX tiago_culture_p1 (130 lugares culturais) e validar (36 controlos)
+# 4. Validate XML against XSD, build the BaseX database (tiago_culture_p1, 130 places), and run all 36 checks
 python -X utf8 scripts/check_basex_p1.py
 
-# 5. Executar individualmente qualquer consulta XQuery sobre a base BaseX
+# 5. Execute individual XQuery scripts against the BaseX database
 powershell -ExecutionPolicy Bypass -File scripts/basex_p1.ps1 -i tiago_culture_p1 -Q xml_basex/01_museums.xq
 ```
 
-> Para manter a instância PostgreSQL da P1 aberta para inspeção em `psql`, `pgAdmin` ou Prisma Studio (`npm run studio:p1`), acrescentar `--keep-open` ao comando `check_full_catalogue.py --with-activity`.
+> **Interactive Inspection Note:** Append `--keep-open` to `python -X utf8 scripts/check_full_catalogue.py --with-activity --keep-open` to keep the isolated PostgreSQL instance running on `127.0.0.1:55441` (`database=tiago_p1`, `user=dmi_p1`, `schema=tiago_lab`) for live inspection during demonstrations.
 
----
-
-### 2.2 Fontes A1 (Elasticsearch) e A2 (MongoDB) — Gonçalo Serafim (`z_Code/`)
-
-**Pré-requisitos:** Windows x64, Python 3.10+ e acesso à Internet na primeira instalação.
-
-A partir da pasta do pacote `z_Code/`:
+### Step 3: Run & Validate Sources A1 (Elasticsearch) and A2 (MongoDB)
+From the `z_Code/` package directory:
 
 ```powershell
-# 1. Instalar versões fixadas dos serviços, preparar entradas, carregar A1/A2 e executar testes
+# 1. Install pinned services, prepare inputs, load A1/A2, and execute verification tests
 powershell -ExecutionPolicy Bypass -File setup.ps1
 
-# 2. Consultas e controlos locais em MongoDB (A2) e Elasticsearch (A1)
+# 2. Run local queries and verification checks on MongoDB (A2) and Elasticsearch (A1)
 .\.venv\Scripts\python.exe scripts/ingest.py --properties
 .\.venv\Scripts\python.exe scripts/ingest.py --quotes 6499 --quote-policy latest-valid
 .\.venv\Scripts\python.exe scripts/ingest.py --search "quiet apartment"
@@ -73,10 +101,28 @@ powershell -ExecutionPolicy Bypass -File setup.ps1
 
 ---
 
-## 3. Declaração de Contribuições e Uso de IA Generativa
+## Individual Contributions
 
-- **Contribuições Individuais:**
-  - **Gonçalo Serafim (79189):** Subtópico de alojamento, avaliações e cotações de preço (fontes A1 em Elasticsearch e A2 em MongoDB, pacote `z_Code`) e especificação das consultas integradas **Q01, Q02, Q05, Q06, Q09 e Q11**.
-  - **Tiago Vailant (79922):** Subtópico de restauração, património cultural e atividade local (fontes B1 em PostgreSQL e B2 em BaseX XML, pasta `Dev`) e especificação das consultas integradas **Q03, Q04, Q07, Q08, Q10 e Q12**.
-  - **Trabalho Conjunto:** Glossário semântico comum, matriz de conflitos de integração para a fase P2 e consolidação do relatório.
-- **Uso de IA Generativa:** Ferramentas de IA generativa (assistentes LLM) foram utilizadas como apoio na formatação LaTeX, revisão de texto e scripts auxiliares de perfilagem e geração de diagramas. Todos os esquemas, restrições de integridade, regras de reconciliação, código e consultas foram validados e executados localmente pelos autores, que assumem total responsabilidade pelo trabalho entregue.
+- **Tiago Vailant (`a79922`):** Dining, cultural heritage, and local activity subtopic (**Source B1** in PostgreSQL and **Source B2** in BaseX XML, `Dev/` directory) and specification of integrated queries **Q03, Q04, Q07, Q08, Q10, and Q12**.
+- **Gonçalo Serafim (`a79189`):** Accommodation, guest reviews, owner documentation, and price quotes subtopic (**Source A1** in Elasticsearch and **Source A2** in MongoDB, `z_Code/` package) and specification of integrated queries **Q01, Q02, Q05, Q06, Q09, and Q11**.
+- **Joint Work:** Shared domain glossary, heterogeneity and conflict resolution matrix for Phase P2, and consolidation of the final report.
+
+---
+
+## Credits
+
+This project made limited use of generative AI tools (conversational LLM assistants) to support LaTeX formatting, text revision, and auxiliary profiling and diagram-generation scripts. All schemas, integrity constraints, reconciliation rules, code, and queries were locally executed and verified by the authors, who assume full responsibility for the submitted work.
+
+---
+
+## Authors
+
+**Tiago Vailant**
+- **Student ID:** a79922
+- **Institutional Email:** a79922@ualg.pt
+- **Institution:** Universidade do Algarve
+
+**Gonçalo Serafim**
+- **Student ID:** a79189
+- **Institutional Email:** a79189@ualg.pt
+- **Institution:** Universidade do Algarve
