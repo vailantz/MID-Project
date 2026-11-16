@@ -17,18 +17,18 @@ O arquivo já estava no computador desde **14/10/2026**. Em **21/10/2026** foi c
 | `tripadvisor_lisboa.csv` | Os 5,261 registos com `country = Portugal` e `city = Lisbon`; todas as colunas e valores originais preservados |
 | `provenance.json` | Origem, filtro, contagens, tamanhos e hashes para reprodução |
 
-Não é necessário extrair agora o CSV europeu completo, que ocupa cerca de 680 MB. Ele já está guardado dentro do ZIP original. O CSV de Lisboa está pronto para inspeção e futura importação.
+Não é necessário extrair agora o CSV europeu completo, que ocupa cerca de 680 MB. Ele já está guardado dentro do ZIP original. O CSV de Lisboa está pronto para inspeção e importação.
 
 ## Dados reais e dados sintéticos
 
 Estes ficheiros contêm o catálogo real publicado: nomes, moradas, coordenadas, etiquetas/culinárias, avaliações agregadas, contagens de reviews e outros atributos, quando disponíveis.
 
-**Não contêm as pessoas, reservas ou visitas individuais que queremos modelar.** Na nossa parte do projeto, essas entidades e eventos serão inteiramente sintéticos e ficarão identificados como tal nas tabelas PostgreSQL. Não são retirados de contas de utilizadores Tripadvisor e não correspondem a pessoas reais.
+**Não contêm as pessoas, reservas ou visitas individuais que queremos modelar.** Na nossa parte do projeto, essas entidades e eventos são inteiramente sintéticos e ficam identificados como tal nas tabelas PostgreSQL. Não são retirados de contas de utilizadores Tripadvisor e não correspondem a pessoas reais.
 
 A contagem de reviews de um estabelecimento não é uma contagem de visitas. Uma avaliação agregada não identifica quem a deu. Os dados sintéticos simulam atividade para testar o modelo e as consultas; não demonstram frequência real dos estabelecimentos.
 
-## Relação com o exercício inicial
+## Relação com a implementação P1
 
-`Projeto/Dev` usa apenas oito destes estabelecimentos numa primeira amostra didática. Os 5,261 registos completos de Lisboa estão aqui guardados; a amostra de oito não substitui a fonte.
+`Projeto/Dev` importa os 5,261 registos completos de Lisboa para PostgreSQL (`tiago_lab.establishment` e `tiago_lab.establishment_label`) através de `Projeto/Dev/scripts/prepare_full_catalogue.py`.
 
-O script `Projeto/Dev/scripts/organise_original_source.py` documenta a extração. A seleção geográfica usa os rótulos da origem, sem afirmar um recorte por fronteira municipal nem que todos os estabelecimentos continuam abertos.
+O script `Projeto/Dev/scripts/organise_original_source.py` documenta a extração inicial a partir do ZIP europeu. A seleção geográfica usa os rótulos da origem, sem afirmar um recorte por fronteira municipal nem que todos os estabelecimentos continuam abertos.

@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "executed_at": "2026-11-02T13:16:52+00:00",
+  "executed_at": "2026-11-16T23:07:15+00:00",
   "database": "tiago_culture_p1",
   "state": "C:\\Users\\tiago\\OneDrive\\Documentos\\Mestrado\\MID\\Projeto\\Dev\\.runtime\\basex_p1",
   "checks": [
@@ -42,7 +42,7 @@
     "original_xml_xsd_and_scenario_unchanged"
   ],
   "postgresql_started": false,
-  "reused_existing_database": true,
+  "reused_existing_database": false,
   "checks_passed": 36,
   "xml_sha256": "0185748cede2d0383577ea74e062ac0ee268e15f6ac8b20d203c57718c492f0a",
   "xsd_sha256": "96e1569db1e180a6b042ac0e1adcb340855db0d874eb65a1913f2fd75947a79d",
@@ -101,5 +101,5 @@
     "Structural validity and usable contact text do not establish real-world truth or current availability.",
     "Names are not identities. No deduplication or PostgreSQL queries performed."
   ],
-  "finished_at": "2026-11-02T13:18:07+00:00"
+  "finished_at": "2026-11-16T23:07:40+00:00"
 }

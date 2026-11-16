@@ -7,14 +7,31 @@ import argparse
 import copy
 import hashlib
 import json
+import os
 import re
 import shutil
+import subprocess
 import tempfile
 
 from lxml import etree
-from check_demo import run
 
 ROOT = Path(__file__).resolve().parents[1]
+NO_WINDOW = getattr(subprocess, 'CREATE_NO_WINDOW', 0)
+
+
+def run(args, timeout=90):
+    log_dir = ROOT/'.runtime/command_logs'
+    log_dir.mkdir(parents=True, exist_ok=True)
+    out_fd, out_name = tempfile.mkstemp(prefix='out_', suffix='.txt', dir=log_dir)
+    err_fd, err_name = tempfile.mkstemp(prefix='err_', suffix='.txt', dir=log_dir)
+    with os.fdopen(out_fd, 'w', encoding='utf-8') as out, os.fdopen(err_fd, 'w', encoding='utf-8') as err:
+        p = subprocess.run([str(a) for a in args], cwd=ROOT, stdout=out, stderr=err,
+                           stdin=subprocess.DEVNULL, timeout=timeout, creationflags=NO_WINDOW)
+    stdout = Path(out_name).read_text(encoding='utf-8', errors='replace')
+    stderr = Path(err_name).read_text(encoding='utf-8', errors='replace')
+    if p.returncode:
+        raise RuntimeError(f'Command failed ({p.returncode}): {args[0]}\n{stderr}\n{stdout}')
+    return stdout
 XML_PATH = ROOT/'data/cultural_catalogue.xml'
 ORIGINAL = ROOT.parent/'Fontes/Camara_Municipal/79922_2.xml'
 XSD_PATH = ROOT/'xml_basex/catalogue.xsd'

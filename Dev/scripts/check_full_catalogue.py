@@ -7,10 +7,27 @@ import csv
 import json
 import os
 import socket
+import subprocess
 import tempfile
 
-from check_demo import run
 from prepare_full_catalogue import ROOT, SOURCE, SQL_PATH, prepare, sha256, sql_text
+
+NO_WINDOW = getattr(subprocess, 'CREATE_NO_WINDOW', 0)
+
+
+def run(args, timeout=90):
+    log_dir = ROOT/'.runtime/command_logs'
+    log_dir.mkdir(parents=True, exist_ok=True)
+    out_fd, out_name = tempfile.mkstemp(prefix='out_', suffix='.txt', dir=log_dir)
+    err_fd, err_name = tempfile.mkstemp(prefix='err_', suffix='.txt', dir=log_dir)
+    with os.fdopen(out_fd, 'w', encoding='utf-8') as out, os.fdopen(err_fd, 'w', encoding='utf-8') as err:
+        p = subprocess.run([str(a) for a in args], cwd=ROOT, stdout=out, stderr=err,
+                           stdin=subprocess.DEVNULL, timeout=timeout, creationflags=NO_WINDOW)
+    stdout = Path(out_name).read_text(encoding='utf-8', errors='replace')
+    stderr = Path(err_name).read_text(encoding='utf-8', errors='replace')
+    if p.returncode:
+        raise RuntimeError(f'Command failed ({p.returncode}): {args[0]}\n{stderr}\n{stdout}')
+    return stdout
 
 
 def main():
@@ -23,7 +40,7 @@ def main():
                         help='Carregar e verificar tambem o cenario ficticio da P1')
     args = parser.parse_args()
     if not 1 <= args.port <= 65535 or args.port == 55439:
-        parser.error('Escolher uma porta valida diferente da porta 55439 da amostra')
+        parser.error('Escolher uma porta valida diferente da porta 55439')
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
         probe.settimeout(1)
         if probe.connect_ex(('127.0.0.1', args.port)) == 0:
@@ -32,8 +49,7 @@ def main():
         if not (args.pg_bin/(executable + '.exe')).is_file():
             parser.error(f'Executavel em falta: {executable}; rever --pg-bin')
     os.environ['PGCLIENTENCODING'] = 'UTF8'
-    preserved_files = [SOURCE, ROOT/'postgresql/01_schema.sql',
-                       ROOT/'postgresql/02_sample_data.sql', ROOT/'data/provenance.json']
+    preserved_files = [SOURCE, ROOT/'postgresql/01_schema.sql', ROOT/'data/provenance.json']
     activity = None
     if args.with_activity:
         from prepare_synthetic_activity import prepare_activity, ACTIVITY_SQL, FIXTURE, XML_PATH

@@ -1,6 +1,6 @@
 # Qualidade do catálogo PostgreSQL — preparação da P1
 
-Análise: 2026-11-02T09:58:02+00:00
+Análise: 2026-11-16T23:06:49+00:00
 
 - Registos: 5261; colunas: 42.
 - Registos compatíveis com as regras verificadas: 5261.

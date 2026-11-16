@@ -1,7 +1,7 @@
 {
   "status": "passed",
-  "executed_at": "2026-11-16T14:00:12+00:00",
-  "cluster": "C:\\Users\\tiago\\.t3\\userdata\\antigravity-tmp\\ac0a3dfd6ddd\\run-T1r8Fz\\dmi_pg_p1_we1050i3\\data",
+  "executed_at": "2026-11-16T23:06:51+00:00",
+  "cluster": "C:\\Users\\tiago\\.t3\\userdata\\antigravity-tmp\\ac0a3dfd6ddd\\run-T1r8Fz\\dmi_pg_p1_t6_za_30\\data",
   "port": 55441,
   "database": "tiago_p1",
   "source_sha256": "3bc43aca520c9db3cc780f85441cc60645235fbfe2b6eeb0dab9e9f09d511dd2",
@@ -35,5 +35,5 @@
   "checks_passed": 16,
   "postgresql_version": "PostgreSQL 16.1, compiled by Visual C++ build 1937, 64-bit",
   "server_running_after_command": false,
-  "finished_at": "2026-11-16T14:00:22+00:00"
+  "finished_at": "2026-11-16T23:06:58+00:00"
 }

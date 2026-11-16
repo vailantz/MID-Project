@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-16T14:00:12+00:00",
+  "generated_at": "2026-11-16T23:08:34+00:00",
   "source_file": "Fontes\\Tripadvisor_Kaggle\\tripadvisor_lisboa.csv",
   "source_sha256": "3bc43aca520c9db3cc780f85441cc60645235fbfe2b6eeb0dab9e9f09d511dd2",
   "schema_sha256": "b75797daea0cc4b515dc12d12a4432d3b66c74527a7c91cc0193e71c24c6c79b",
-  "sample_provenance_sha256": "8d145df99ba55f7e194c11e330d5fbb2d5f9bb609f79c993b827d413436d688e",
+  "sample_provenance_sha256": "92336c8e6e2d17b6d807d4569b24866f2243d6f425517841cd5e99b78b3a62e8",
   "sql_file": "postgresql\\generated\\full_catalogue.sql",
   "sql_sha256": "569a02bbaecad3329b3e22c9745d20b8e485b7b688d9e78f05072f2a947658ff",
   "expected_counts": {
