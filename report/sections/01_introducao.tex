@@ -1,0 +1,27 @@
+\section{Introduction and Context}
+\label{sec:introducao}
+Planning a stay in Lisbon involves information about accommodation, guest reviews, restaurants and cultural venues. The catalogues have their own structures, identifiers, scales and contacts. Querying them together requires relationships between these elements and explicit treatment of data quality.
+
+The project adopts virtual data integration: each source retains its model, and the P2 mediator will query views over the local systems. P1, the subject of this report, establishes requirements, implements and populates the sources, and defines the contract for future queries, following the assignment\cite{dmi_enunciado2026} and principles of data modelling and integration\cite{lemahieu2018principles,doan2012principles}.
+
+\subsection{Objectives and Method}
+The objectives are to represent the two complementary subtopics, justify the technologies, document local models, introduce reproducible quality challenges and specify queries with expected answers. Requirements were formulated from the tourism domain, the available data and the usage scenarios in Section~\ref{sec:requisitos}.
+
+The work distinguishes three outputs: implemented local data and schemas; checks executed against each source; and integrated queries specified for P2. Local measurements and query validation examples have separate sections, respectively Sections~\ref{sec:povoamento_qualidade} and~\ref{sec:consultas}.
+
+\subsection{Responsibilities}
+\begin{table}[!htbp]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.1}
+\caption{Responsibilities, sources and technologies.}\label{tab:divisao_trabalho}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm}l>{\raggedright\arraybackslash}p{2.5cm}X}
+\toprule
+\textbf{Student and subtopic} & \textbf{Source} & \textbf{Technology} & \textbf{Content} \\
+\midrule
+Gonçalo Serafim (79189), accommodation and guest experience & A1 & Elasticsearch & Textual reviews and account profiles. \\
+ & A2 & MongoDB & Listings, host profiles, owners and price quotes. \\
+Tiago Vailant (79922), local amenities and activity & B1 & PostgreSQL & Restaurants, labels, group representatives, reservations and visits. \\
+ & B2 & BaseX / XML & Museums, monuments and institutional contacts. \\
+\bottomrule
+\end{tabularx}
+\end{table}

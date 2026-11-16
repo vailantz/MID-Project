@@ -16,7 +16,7 @@ The core goal is to model and query complementary urban tourism subtopics across
 The formal academic report for **Project P1** is available in [`report/`](report/):
 
 - **[English Report (PDF)](report/Report_P1_Tiago_Goncalo_English.pdf)** — Compiled Project P1 report
-- Complete LaTeX source files, ER diagrams, and bibliography are maintained in [`report/latex_clean/`](report/latex_clean/).
+- Complete LaTeX source files, ER diagrams, and bibliography are maintained in [`report/`](report/).
 
 ---
 
@@ -24,7 +24,7 @@ The formal academic report for **Project P1** is available in [`report/`](report
 
 | Directory / File | Description |
 | :--- | :--- |
-| [`report/`](report/) | Compiled Project P1 report ([`Report_P1_Tiago_Goncalo_English.pdf`](report/Report_P1_Tiago_Goncalo_English.pdf)) and complete LaTeX source files ([`report/latex_clean/`](report/latex_clean/)). |
+| [`report/`](report/) | Compiled Project P1 report ([`Report_P1_Tiago_Goncalo_English.pdf`](report/Report_P1_Tiago_Goncalo_English.pdf)) and complete LaTeX source files ([`report/`](report/)). |
 | [`Dev/`](Dev/README.md) | Implementation of **Sources B1 (PostgreSQL 16)** and **B2 (BaseX 12.4 XML)**: schemas, profiling/loading/validation scripts, SQL & XQuery queries, synthetic activity fixtures, and validation reports. |
 | [`Dev/models/`](Dev/models/) | Conceptual ER diagrams ([`der_tiago.png`](Dev/models/der_tiago.png), [`der_goncalo_owner_en.pdf`](Dev/models/der_goncalo_owner_en.pdf)) and logical/physical model specifications (`04_postgresql_p1.md` to `07_requisitos_p1.md`). |
 | [`Dev/postgresql/`](Dev/postgresql/README_P1.md) | Relational schema (`01_schema.sql`), sample dataset (`02_sample_data.sql`), deterministic generated SQL (`generated/full_catalogue.sql`, `generated/synthetic_activity.sql`), and local SQL queries (`03_queries.sql` to `06_p1_activity_queries.sql`). |
