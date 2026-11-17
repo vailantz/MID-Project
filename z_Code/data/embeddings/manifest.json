@@ -1,0 +1,189 @@
+{
+  "format": 2,
+  "embedding_contract": {
+    "model": "Qwen/Qwen3-Embedding-4B",
+    "revision": "5cf2132abc99cad020ac570b19d031efec650f2b",
+    "dimensions": 1024,
+    "max_tokens": 8192,
+    "pooling": "last_token",
+    "normalization": "L2 after dimension truncation",
+    "dtype": "bfloat16",
+    "attention": "sdpa",
+    "padding_side": "left",
+    "text_processing": "HTML tags removed; entities decoded; whitespace collapsed",
+    "query_instruction": "Given a travel accommodation search query, retrieve relevant guest reviews."
+  },
+  "source_sha256": {
+    "79189_1.csv": "f657a3b513b4862e4e31dc4331d09878547ab01f3cb055e42ca6220385d363bf",
+    "79189_2.json": "3299402d439c35b9612bca3277cb8b237a4463f2153062572c5816b7eeebd559"
+  },
+  "counts": {
+    "reviews": 1950076,
+    "vectors": 1935112,
+    "empty": 14964
+  },
+  "parts": [
+    {
+      "file": "vectors-001.jsonl.gz",
+      "rows": 60659,
+      "sha256": "8b43365a3ef0075b367d9db73dede1047e496061f9da007edf912789605986ca"
+    },
+    {
+      "file": "vectors-002.jsonl.gz",
+      "rows": 60285,
+      "sha256": "ffde7cb24b1a272d864c4868843995f7f075ded6becc8048bd24330f9008be9a"
+    },
+    {
+      "file": "vectors-003.jsonl.gz",
+      "rows": 60291,
+      "sha256": "072f82e84d22ee4d46c176416867507385f56e09013d55935d6b4fbe41eba93c"
+    },
+    {
+      "file": "vectors-004.jsonl.gz",
+      "rows": 60567,
+      "sha256": "24f339807fafcbf0776e1c055138f7e18f2240853ae731f58b78b981bb590cd3"
+    },
+    {
+      "file": "vectors-005.jsonl.gz",
+      "rows": 60217,
+      "sha256": "0e7143eccd1860229d9ee216614c3db2921d7cb88dcec8c37263ce5725b0b592"
+    },
+    {
+      "file": "vectors-006.jsonl.gz",
+      "rows": 60404,
+      "sha256": "12fc12c01b8a9766dafd48321ec7d57cb15b1301f98bf055848148fd834f593e"
+    },
+    {
+      "file": "vectors-007.jsonl.gz",
+      "rows": 60571,
+      "sha256": "aec0cfe6edb24558073bf48ea34e43843baff88ea56be25a11d8b43d227aa220"
+    },
+    {
+      "file": "vectors-008.jsonl.gz",
+      "rows": 60434,
+      "sha256": "80a9c133c6daf68c57942017bb3476ef1f636e9ba2f90eda5e37ea43eaaa17f4"
+    },
+    {
+      "file": "vectors-009.jsonl.gz",
+      "rows": 60694,
+      "sha256": "a09a9353e550be0242581e07e2b1b6c6ebbeadb638a0414012ed11944eebdbea"
+    },
+    {
+      "file": "vectors-010.jsonl.gz",
+      "rows": 60302,
+      "sha256": "f80116a2ccaea66dc6328daaf1d8b47eb9a68b29a4ac4dad732fcff8bf29c871"
+    },
+    {
+      "file": "vectors-011.jsonl.gz",
+      "rows": 60736,
+      "sha256": "a0486302f463aeab78e649b3e265c8f6655ebfe5977df1f82996fd94cc888b91"
+    },
+    {
+      "file": "vectors-012.jsonl.gz",
+      "rows": 60761,
+      "sha256": "5d035d16d5801e7a528f6b0639f695beca87bca72d88c49cb43719a6dd6a362a"
+    },
+    {
+      "file": "vectors-013.jsonl.gz",
+      "rows": 60530,
+      "sha256": "7537afc37b4ef0998c86670bb9e1e914bf032ed9e26f46d56f232c78a2fcc0d9"
+    },
+    {
+      "file": "vectors-014.jsonl.gz",
+      "rows": 60420,
+      "sha256": "b2f19619b8e8af8be3ca1c14e0ac1db4d5209488dba6fc76160fd86eac6c49e5"
+    },
+    {
+      "file": "vectors-015.jsonl.gz",
+      "rows": 60496,
+      "sha256": "58e8625c1f223dfec9b1cd8cfcf8443e6cac11b5b19e71ca26f68bd99eccf14d"
+    },
+    {
+      "file": "vectors-016.jsonl.gz",
+      "rows": 60351,
+      "sha256": "f968b39fc69f7eecd22d24d1ebc0ca9be46ec4b2df3f36750a8267430dbf9dc9"
+    },
+    {
+      "file": "vectors-017.jsonl.gz",
+      "rows": 60627,
+      "sha256": "18cdb87992f41de7da9f7a0b9e95cb4b16923c997f5295fc83cd5e21438b4710"
+    },
+    {
+      "file": "vectors-018.jsonl.gz",
+      "rows": 60397,
+      "sha256": "9f35e55b511e10bab9bfaaf100a6f876e4cddd2c469b76e47722347b7fe89d1d"
+    },
+    {
+      "file": "vectors-019.jsonl.gz",
+      "rows": 60052,
+      "sha256": "f0ad490defcfb1e089e3c9ba693b81d62b0d761ad8dd382cd26eb40619efc13e"
+    },
+    {
+      "file": "vectors-020.jsonl.gz",
+      "rows": 60352,
+      "sha256": "546a5bc9fcd4e49970e0e6c47a4052de1e3faad4969da794a6e4c24fbb73aa76"
+    },
+    {
+      "file": "vectors-021.jsonl.gz",
+      "rows": 60757,
+      "sha256": "728b74d38b1b118eac7b09caaac25c4317c912aa79230f8197207d7e31bdb20e"
+    },
+    {
+      "file": "vectors-022.jsonl.gz",
+      "rows": 60215,
+      "sha256": "9ba78e7bd09d0dff30fecfa284fb74732a761a9a2f5c951b4adfe08bf46dbba9"
+    },
+    {
+      "file": "vectors-023.jsonl.gz",
+      "rows": 60620,
+      "sha256": "b86aaf4572dd1e8a3af06423751bfdae03120a714e2a40c331cdcbbfc2895aec"
+    },
+    {
+      "file": "vectors-024.jsonl.gz",
+      "rows": 60043,
+      "sha256": "7d68e520185d159fa78c146f5dc462ebe5c471334a013df1f4b755d971d6c073"
+    },
+    {
+      "file": "vectors-025.jsonl.gz",
+      "rows": 60485,
+      "sha256": "7d880df907ac4c640e554e0d17a17080a3445b0f6217e68691fb2e1c6d5f7112"
+    },
+    {
+      "file": "vectors-026.jsonl.gz",
+      "rows": 60271,
+      "sha256": "83e22dd6bbc7b873a5563343e64b5f6c7fc2fe4df3b44b68f67bf79e43dbf84a"
+    },
+    {
+      "file": "vectors-027.jsonl.gz",
+      "rows": 60676,
+      "sha256": "8c8f6ab08ccc6b6d055440cc734d5da2226b094252b8f6397a40a16469669ddd"
+    },
+    {
+      "file": "vectors-028.jsonl.gz",
+      "rows": 60410,
+      "sha256": "8cdce02f335fd59c658eddefaf5c25e249e44cf64183610753f29a967f3030cd"
+    },
+    {
+      "file": "vectors-029.jsonl.gz",
+      "rows": 60440,
+      "sha256": "2605f55137bebf9e74cb26361a77e8b2006bb0e6c6f8ff7afd3dadac72fca8fb"
+    },
+    {
+      "file": "vectors-030.jsonl.gz",
+      "rows": 60502,
+      "sha256": "440784da59053a72fae81e474e51b18932a654ffaa04a7da9f01c7710baaa886"
+    },
+    {
+      "file": "vectors-031.jsonl.gz",
+      "rows": 60933,
+      "sha256": "d06dfa65a5c377f1a6f82d3f44f2f1730a599462c7bad2132dddd4bf9b7a988d"
+    },
+    {
+      "file": "vectors-032.jsonl.gz",
+      "rows": 60614,
+      "sha256": "73e3250b2d24fff2d2100f1818089dc4a50b3d7375f65b527a9b590944c0c554"
+    }
+  ],
+  "complete": true,
+  "partitions": 32
+}

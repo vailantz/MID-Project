@@ -1,0 +1,14 @@
+.venv/
+.venv-embeddings/
+.runtime/
+data/current/
+reports/
+__pycache__/
+*.pyc
+*.aux
+*.log
+*.out
+*.toc
+data/embeddings/*.part
+data/embeddings/*.tmp
+

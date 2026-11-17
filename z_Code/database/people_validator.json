@@ -1,0 +1,76 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "_id",
+      "person_id",
+      "name",
+      "phone_number",
+      "phone_country",
+      "roles",
+      "observed_at",
+      "observations",
+      "quality_flags",
+      "resolution"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "_id": {
+        "bsonType": "string"
+      },
+      "person_id": {
+        "bsonType": "string"
+      },
+      "name": {
+        "bsonType": [
+          "string",
+          "null"
+        ]
+      },
+      "phone_number": {
+        "bsonType": [
+          "string",
+          "null"
+        ],
+        "pattern": "^[0-9]{7,11}$"
+      },
+      "phone_country": {
+        "bsonType": [
+          "string",
+          "null"
+        ]
+      },
+      "roles": {
+        "bsonType": "array",
+        "items": {
+          "enum": [
+            "host",
+            "reviewer"
+          ]
+        }
+      },
+      "observed_at": {
+        "bsonType": [
+          "date",
+          "null"
+        ]
+      },
+      "observations": {
+        "bsonType": "array",
+        "minItems": 1,
+        "items": {
+          "bsonType": "object"
+        }
+      },
+      "quality_flags": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "string"
+        }
+      },
+      "resolution": {
+        "bsonType": "object"
+      }
+    }
+  }
+}

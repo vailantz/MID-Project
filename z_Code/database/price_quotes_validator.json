@@ -1,0 +1,122 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "_id",
+      "quote_id",
+      "listing_id",
+      "origin",
+      "observations"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "_id": {
+        "bsonType": "string"
+      },
+      "quote_id": {
+        "bsonType": "string"
+      },
+      "listing_id": {
+        "bsonType": "string",
+        "pattern": "^[0-9]+$"
+      },
+      "origin": {
+        "enum": [
+          "prepared_source",
+          "simulated"
+        ]
+      },
+      "observations": {
+        "bsonType": "array",
+        "minItems": 1,
+        "items": {
+          "bsonType": "object",
+          "required": [
+            "observation_id",
+            "raw",
+            "values",
+            "quality_flags"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "observation_id": {
+              "bsonType": "string",
+              "pattern": "^O[0-9a-f]{24}$"
+            },
+            "raw": {
+              "bsonType": "object"
+            },
+            "values": {
+              "bsonType": "object",
+              "required": [
+                "amount",
+                "currency",
+                "checkin",
+                "checkout",
+                "observed_at",
+                "price_basis",
+                "fees_included"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "amount": {
+                  "bsonType": [
+                    "decimal",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "currency": {
+                  "enum": [
+                    "EUR",
+                    "GBP",
+                    "USD",
+                    null
+                  ]
+                },
+                "checkin": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "checkout": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "observed_at": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "price_basis": {
+                  "enum": [
+                    "unspecified",
+                    "per_night",
+                    "per_stay",
+                    null
+                  ]
+                },
+                "fees_included": {
+                  "bsonType": [
+                    "bool",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "quality_flags": {
+              "bsonType": "array",
+              "items": {
+                "bsonType": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -32,6 +32,8 @@ The formal academic report for **Project P1** is available in [`report/`](report
 | [`Dev/xml_basex/`](Dev/xml_basex/) | XML Schema (`catalogue.xsd`) and XQuery scripts (`01_museums.xq` to `06_p1_quality.xq`) over the municipal cultural catalogue (`Dev/data/cultural_catalogue.xml`). |
 | [`Dev/scripts/`](Dev/scripts/) | Automated Python and PowerShell preparation and verification scripts (`profile_source.py`, `prepare_full_catalogue.py`, `prepare_synthetic_activity.py`, `check_full_catalogue.py`, `check_basex_p1.py`, `basex_p1.ps1`). |
 | [`Dev/results/`](Dev/results/) | Consolidated execution logs, SHA-256 provenance manifests, XML/XQuery outputs (`basex_p1/`), and JSON validation reports. |
+| [`z_Code/`](z_Code/) | Sources A1 (Elasticsearch) and A2 (MongoDB): preparation, loading, local queries, tests and completed review embeddings. |
+| [`z_Code/docs/entity_examples.pdf`](z_Code/docs/entity_examples.pdf) | Two stored examples of each A1/A2 entity. |
 | [`Fontes/`](Fontes/) | Preserved original datasets and provenance metadata (`Tripadvisor_Kaggle/`, `Camara_Municipal/`, `InsideAirbnb/`). |
 | [`Docs/`](Docs/) | Official course project brief ([`DMI_Projects_2026_2027.pdf`](Docs/DMI_Projects_2026_2027.pdf)) and project proposal ([`project_proposal.pdf`](Docs/project_proposal.pdf)). |
 
@@ -48,7 +50,10 @@ The formal academic report for **Project P1** is available in [`report/`](report
 ### Sources A1 & A2 (`z_Code/`)
 - **OS:** Windows x64
 - **Python:** $\ge 3.10$
-- **Services:** MongoDB and Elasticsearch (pinned versions managed by `setup.ps1`)
+- **Git LFS:** required for the original datasets and completed vectors.
+- **Free disk space:** 100 GB for data, model files and full vector indexing.
+- **Services:** MongoDB 8.x and Elasticsearch 8.19.x; `setup.ps1` can install portable versions or use already running services.
+- **Semantic queries:** NVIDIA GPU and CUDA-enabled PyTorch; see [`z_Code/README.md`](z_Code/README.md).
 
 ---
 
@@ -58,7 +63,11 @@ The formal academic report for **Project P1** is available in [`report/`](report
 ```powershell
 git clone https://github.com/vailantz/MID-Project.git
 cd MID-Project
+git lfs install
+git lfs pull
 ```
+
+To test only A1/A2, go directly to Step 3.
 
 ### Step 2: Run & Validate Sources B1 (PostgreSQL) and B2 (BaseX XML)
 From [`Dev/`](Dev/), use the [`run.cmd`](Dev/run.cmd) shortcut runner (works in both CMD and PowerShell with UTF-8 preconfigured):
@@ -78,18 +87,28 @@ run clean     # Clean temporary runtime folders (.runtime and __pycache__)
 ```
 
 ### Step 3: Run & Validate Sources A1 (Elasticsearch) and A2 (MongoDB)
-From the `z_Code/` package directory:
+From the repository root (A1/A2 only):
 
 ```powershell
-# 1. Install pinned services, prepare inputs, load A1/A2, and execute verification tests
-powershell -ExecutionPolicy Bypass -File setup.ps1
+cd z_Code
+powershell -ExecutionPolicy Bypass -File .\setup.ps1
 
-# 2. Run local queries and verification checks on MongoDB (A2) and Elasticsearch (A1)
 .\.venv\Scripts\python.exe scripts/ingest.py --properties
 .\.venv\Scripts\python.exe scripts/ingest.py --quotes 6499 --quote-policy latest-valid
 .\.venv\Scripts\python.exe scripts/ingest.py --search "quiet apartment"
+.\.venv\Scripts\python.exe scripts/ingest.py --renewals --as-of 2026-11-13
 .\.venv\Scripts\python.exe scripts/test_databases.py
 ```
+
+Setup prepares the originals, loads MongoDB/Elasticsearch and imports the completed
+embeddings supplied through Git LFS. No review embedding generation is needed.
+The first Git LFS download includes approximately 8 GB of originals and vectors.
+If compatible MongoDB and Elasticsearch services are already running, use
+`setup.ps1 -UseExisting` instead. Setup replaces only the A1/A2 database and indices.
+
+For later sessions, run `powershell -ExecutionPolicy Bypass -File .\database\start.ps1`
+from `z_Code/` instead of rerunning setup. If using your own services, start them normally.
+GPU setup and semantic-query commands are in [`z_Code/README.md`](z_Code/README.md).
 
 ---
 

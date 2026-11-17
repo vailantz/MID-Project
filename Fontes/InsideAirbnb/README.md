@@ -1,12 +1,17 @@
 # Fontes de alojamento do Gonçalo
 
-- `MemberA2.json`: 25 020 documentos de alojamentos, preparados para MongoDB.
-- `reviews.zip`: contém `reviews.csv`, com 1 950 076 reviews. A fonte de conteúdo não estruturado corresponde ao texto da coluna `comments`; IDs e datas dão contexto a esse texto.
+Os originais utilizados na implementação A1/A2 estão em
+[`z_Code/data/original/`](../../z_Code/data/original/):
 
-Referência da proposta: [Inside Airbnb — Lisboa](https://insideairbnb.com/get-the-data/#lisbon), snapshot de 19/09/2026, licença CC BY 4.0.
+- `79189_1.csv`: 1 950 076 reviews; o texto da coluna `comments` constitui o
+  conteúdo não estruturado, acompanhado pelos identificadores e datas da fonte.
+- `79189_2.json`: extrato de 25 020 alojamentos, preparado a partir dos CSV
+  publicados pela Inside Airbnb; não representa o formato original do download.
 
-O JSON foi preparado a partir de dados publicados em CSV; não é apresentado como o formato original do download. O CSV das reviews está apenas embalado em ZIP. Os nomes e conteúdos recebidos para a proposta aceite foram preservados.
+Os scripts em [`z_Code/`](../../z_Code/) geram os dados de exercício e preparam
+as fontes MongoDB e Elasticsearch. Os vetores concluídos das reviews estão em
+[`z_Code/data/embeddings/`](../../z_Code/data/embeddings/). Os originais e os
+vetores são distribuidos com Git LFS: executar `git lfs pull` após clonar.
 
-Foram eliminadas as cópias redundantes que estavam em `Proposta1` e no ZIP completo da proposta. Os CSV internos dos dois antigos `reviews.zip` foram comparados por SHA-256 e eram idênticos, apesar de a embalagem ZIP ser diferente.
-
-Esta pasta guarda uma cópia de referência das fontes do colega para a integração; a implementação da parte dele continua a ser da sua responsabilidade.
+Fonte: [Inside Airbnb - Lisboa](https://insideairbnb.com/get-the-data/#lisbon),
+snapshot de 19/09/2026, licença CC BY 4.0; extratos recebidos em 14/10/2026.

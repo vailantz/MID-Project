@@ -1,0 +1,3 @@
+/z_Code/data/original/*.csv filter=lfs diff=lfs merge=lfs -text
+/z_Code/data/original/*.json filter=lfs diff=lfs merge=lfs -text
+/z_Code/data/embeddings/*.jsonl.gz filter=lfs diff=lfs merge=lfs -text

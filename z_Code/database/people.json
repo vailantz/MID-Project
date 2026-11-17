@@ -1,0 +1,86 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "refresh_interval": "-1",
+    "analysis": {
+      "analyzer": {
+        "review_text": {
+          "type": "custom",
+          "char_filter": [
+            "html_strip"
+          ],
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "dynamic": "strict",
+    "properties": {
+      "person_id": {
+        "type": "keyword"
+      },
+      "name": {
+        "type": "text",
+        "fields": {
+          "exact": {
+            "type": "keyword"
+          }
+        }
+      },
+      "phone": {
+        "type": "keyword"
+      },
+      "roles": {
+        "type": "keyword"
+      },
+      "observed_at": {
+        "type": "date",
+        "format": "strict_date_time_no_millis"
+      },
+      "quality_flags": {
+        "type": "keyword"
+      },
+      "observations": {
+        "type": "object",
+        "enabled": false
+      },
+      "resolution": {
+        "type": "object",
+        "enabled": false
+      },
+      "owner_id": {
+        "type": "keyword"
+      },
+      "identity_document": {
+        "type": "object",
+        "dynamic": "strict",
+        "properties": {
+          "issuing_country": {
+            "type": "keyword"
+          },
+          "type": {
+            "type": "keyword"
+          },
+          "number": {
+            "type": "keyword"
+          },
+          "nationality": {
+            "type": "keyword"
+          },
+          "expires_on": {
+            "type": "date",
+            "format": "strict_date"
+          },
+          "is_synthetic": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,334 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "_id",
+      "listing_id",
+      "host_person_id",
+      "name",
+      "property_type",
+      "room_type",
+      "capacity",
+      "location",
+      "amenities",
+      "ratings",
+      "review_summary",
+      "last_scraped",
+      "observed_at",
+      "observations",
+      "quality_flags",
+      "resolution",
+      "owner_id"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "_id": {
+        "bsonType": "string"
+      },
+      "listing_id": {
+        "bsonType": "string",
+        "pattern": "^[0-9]+$"
+      },
+      "host_person_id": {
+        "bsonType": "string"
+      },
+      "name": {
+        "bsonType": [
+          "string",
+          "null"
+        ]
+      },
+      "property_type": {
+        "bsonType": [
+          "string",
+          "null"
+        ]
+      },
+      "room_type": {
+        "bsonType": [
+          "string",
+          "null"
+        ]
+      },
+      "capacity": {
+        "bsonType": [
+          "int",
+          "long"
+        ],
+        "minimum": 0
+      },
+      "location": {
+        "bsonType": "object",
+        "required": [
+          "municipality",
+          "neighbourhood",
+          "latitude",
+          "longitude",
+          "point"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "municipality": {
+            "bsonType": [
+              "string",
+              "null"
+            ]
+          },
+          "neighbourhood": {
+            "bsonType": [
+              "string",
+              "null"
+            ]
+          },
+          "latitude": {
+            "bsonType": [
+              "double",
+              "int",
+              "long",
+              "null"
+            ],
+            "minimum": -90,
+            "maximum": 90
+          },
+          "longitude": {
+            "bsonType": [
+              "double",
+              "int",
+              "long",
+              "null"
+            ],
+            "minimum": -180,
+            "maximum": 180
+          },
+          "point": {
+            "bsonType": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "type",
+              "coordinates"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "enum": [
+                  "Point"
+                ]
+              },
+              "coordinates": {
+                "bsonType": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "bsonType": [
+                    "double",
+                    "int",
+                    "long"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "latitude": {
+                "bsonType": "null"
+              },
+              "longitude": {
+                "bsonType": "null"
+              },
+              "point": {
+                "bsonType": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "latitude": {
+                "bsonType": [
+                  "double",
+                  "int",
+                  "long"
+                ]
+              },
+              "longitude": {
+                "bsonType": [
+                  "double",
+                  "int",
+                  "long"
+                ]
+              },
+              "point": {
+                "bsonType": "object"
+              }
+            }
+          }
+        ]
+      },
+      "amenities": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "string"
+        }
+      },
+      "ratings": {
+        "bsonType": "object",
+        "required": [
+          "rating",
+          "accuracy",
+          "cleanliness",
+          "checkin",
+          "communication",
+          "location",
+          "value"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "rating": {
+            "bsonType": [
+              "double",
+              "int",
+              "long",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 5
+          },
+          "accuracy": {
+            "bsonType": [
+              "double",
+              "int",
+              "long",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 5
+          },
+          "cleanliness": {
+            "bsonType": [
+              "double",
+              "int",
+              "long",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 5
+          },
+          "checkin": {
+            "bsonType": [
+              "double",
+              "int",
+              "long",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 5
+          },
+          "communication": {
+            "bsonType": [
+              "double",
+              "int",
+              "long",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 5
+          },
+          "location": {
+            "bsonType": [
+              "double",
+              "int",
+              "long",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 5
+          },
+          "value": {
+            "bsonType": [
+              "double",
+              "int",
+              "long",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 5
+          }
+        }
+      },
+      "review_summary": {
+        "bsonType": "object",
+        "required": [
+          "count",
+          "first_date",
+          "last_date",
+          "indexed_count"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "bsonType": [
+              "int",
+              "long"
+            ],
+            "minimum": 0
+          },
+          "first_date": {
+            "bsonType": [
+              "date",
+              "null"
+            ]
+          },
+          "last_date": {
+            "bsonType": [
+              "date",
+              "null"
+            ]
+          },
+          "indexed_count": {
+            "bsonType": [
+              "int",
+              "long"
+            ],
+            "minimum": 0
+          }
+        }
+      },
+      "last_scraped": {
+        "bsonType": [
+          "date",
+          "null"
+        ]
+      },
+      "observed_at": {
+        "bsonType": [
+          "date",
+          "null"
+        ]
+      },
+      "observations": {
+        "bsonType": "array",
+        "minItems": 1,
+        "items": {
+          "bsonType": "object"
+        }
+      },
+      "quality_flags": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "string"
+        }
+      },
+      "resolution": {
+        "bsonType": "object"
+      },
+      "owner_id": {
+        "bsonType": "string",
+        "pattern": "^O[0-9a-f]{24}$"
+      }
+    }
+  }
+}

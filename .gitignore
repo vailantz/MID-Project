@@ -6,3 +6,9 @@ node_modules/
 Fontes/InsideAirbnb/MemberA2.json
 report/latex_orange/
 report/Report_P1_Tiago_Goncalo_orange.pdf
+
+# A1/A2 generated files
+z_Code/.venv*/
+z_Code/data/current/
+z_Code/reports/
+z_Code/data/embeddings/*.part
