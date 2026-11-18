@@ -1,0 +1,17 @@
+{
+  "encode": {
+    "text": "pink house"
+  },
+  "search": {
+    "size": 5,
+    "_source": {
+      "excludes": ["embedding"]
+    },
+    "knn": {
+      "field": "embedding",
+      "query_vector": [],
+      "k": 5,
+      "num_candidates": 100
+    }
+  }
+}

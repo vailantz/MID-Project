@@ -1,0 +1,16 @@
+{
+  "size": 5,
+  "_source": {
+    "excludes": ["embedding"]
+  },
+  "query": {
+    "match": {
+      "comments": "pink house"
+    }
+  },
+  "highlight": {
+    "fields": {
+      "comments": {}
+    }
+  }
+}
