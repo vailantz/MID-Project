@@ -84,6 +84,7 @@ text and remain unembedded.
   query encoder on localhost port 8791, and kNN queries.
 - `database/`: mappings, validators and portable service commands.
 - `scripts/test_*.py`: unit and live database checks.
+- `docs/scripts_and_execution.pdf`: a short description of each A1/A2 script.
 - `docs/entity_examples.pdf`: stored entity examples.
 - `docs/anomalies_and_handling.pdf`: anomalies, handling policies and worked examples.
 - `scripts/query_examples.py --query N`: runs query N from that sheet.
