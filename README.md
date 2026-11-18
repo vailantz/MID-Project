@@ -107,7 +107,10 @@ If compatible MongoDB and Elasticsearch services are already running, use
 `setup.ps1 -UseExisting` instead. Setup replaces only the A1/A2 database and indices.
 
 For later sessions, run `powershell -ExecutionPolicy Bypass -File .\database\start.ps1`
-from `z_Code/` instead of rerunning setup. If using your own services, start them normally.
+from `z_Code/` instead of rerunning setup. After GPU setup, this also loads Qwen once
+and keeps it in GPU memory for repeated semantic queries. Use `start.ps1 -SkipQwen`
+for MongoDB and BM25 only. If using your own services, start them normally and run
+`scripts/query_encoder.py --start` with the GPU Python environment.
 GPU setup and semantic-query commands are in [`z_Code/README.md`](z_Code/README.md).
 
 ---

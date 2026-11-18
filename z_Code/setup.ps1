@@ -22,7 +22,7 @@ if ($UseExisting) {
     Run-Python scripts/install_tools.py --check-running
 } else {
     Run-Python scripts/install_tools.py
-    & powershell -NoProfile -ExecutionPolicy Bypass -File database/start.ps1
+    & powershell -NoProfile -ExecutionPolicy Bypass -File database/start.ps1 -SkipQwen
     if ($LASTEXITCODE) { throw 'Database startup failed.' }
 }
 Run-Python scripts/test_rules.py

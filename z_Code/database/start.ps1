@@ -1,4 +1,4 @@
-param([int]$WaitSeconds = 120)
+param([int]$WaitSeconds = 120, [switch]$SkipQwen)
 $ErrorActionPreference = 'Stop'
 $project = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $runtime = Join-Path $project '.runtime'
@@ -36,16 +36,25 @@ ingest.geoip.downloader.enabled: false
 }
 
 $deadline = (Get-Date).AddSeconds($WaitSeconds)
+$ready = $false
 do {
     try {
         $health = Invoke-RestMethod 'http://127.0.0.1:9200/_cluster/health' -TimeoutSec 2
         if ($health.cluster_name -ne 'dmi-79189') { throw 'Port 9200 belongs to another Elasticsearch cluster.' }
         if ($health.status -in @('green', 'yellow')) {
-            Write-Host 'MongoDB: mongodb://127.0.0.1:27017'
-            Write-Host 'Elasticsearch: http://127.0.0.1:9200'
-            exit 0
+            $ready = $true
+            break
         }
     } catch { Start-Sleep -Seconds 2 }
 } while ((Get-Date) -lt $deadline)
-throw "Sources did not start. Check $state for logs."
+if (!$ready) { throw "Sources did not start. Check $state for logs." }
+Write-Host 'MongoDB: mongodb://127.0.0.1:27017'
+Write-Host 'Elasticsearch: http://127.0.0.1:9200'
+if (!$SkipQwen) {
+    $python = Join-Path $project '.venv-embeddings/Scripts/python.exe'
+    if (!(Test-Path -LiteralPath $python)) { throw 'Prepare the GPU environment in README.md, or use -SkipQwen for BM25 and MongoDB only.' }
+    Write-Host 'Loading Qwen for semantic queries...'
+    & $python (Join-Path $project 'scripts/query_encoder.py') --start
+    if ($LASTEXITCODE) { throw "Qwen did not start. Check $state/qwen.log." }
+}
 

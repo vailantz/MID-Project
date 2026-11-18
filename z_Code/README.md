@@ -22,7 +22,7 @@ Allow 100 GB free space for installation, generated data and vector indexing.
 
 ## Later sessions and queries
 
-Start your existing services, or start the portable services installed by setup:
+After preparing the GPU environment below, start the portable services and Qwen:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\database\start.ps1
@@ -35,6 +35,16 @@ powershell -ExecutionPolicy Bypass -File .\database\start.ps1
 
 Do not rerun setup to query existing sources: setup rebuilds them. The portable
 services can be stopped with `powershell -ExecutionPolicy Bypass -File .\database\stop.ps1`.
+Startup loads Qwen once; subsequent semantic queries reuse it. Shutdown releases
+its GPU memory. Use `start.ps1 -SkipQwen` for MongoDB and BM25 sessions without Qwen.
+
+To run a numbered query from the [anomalies sheet](docs/anomalies_and_handling.pdf):
+
+```powershell
+.\.venv\Scripts\python.exe scripts/query_examples.py --query 1
+```
+
+Choose a number from 1 to 21. The sheet’s appendix also gives direct commands for each query.
 
 ## Semantic search
 
@@ -46,12 +56,17 @@ and requires an NVIDIA GPU (the encoder was tested with 32 GB VRAM):
 .\.venv\Scripts\python.exe -m venv .venv-embeddings
 .\.venv-embeddings\Scripts\python.exe -m pip install torch==2.9.1 --index-url https://download.pytorch.org/whl/cu128
 .\.venv-embeddings\Scripts\python.exe -m pip install -r requirements-embeddings.txt
+.\.venv-embeddings\Scripts\python.exe scripts/query_encoder.py --start
 .\.venv-embeddings\Scripts\python.exe scripts/nlp.py --query "a peaceful place to sleep"
 ```
 
-Qwen's pinned model is downloaded if it is not cached. The query is embedded
-locally and searches the imported review vectors; review embeddings are not
-regenerated. BM25 and MongoDB queries do not need the model or a GPU.
+Qwen's pinned model is downloaded if it is not cached. The background encoder
+keeps it in GPU memory and embeds each query; Elasticsearch searches the imported
+review vectors. Later sessions load Qwen automatically through `database/start.ps1`.
+With your own database services, run `scripts/query_encoder.py --start` after
+starting Elasticsearch. The encoder exits when Elasticsearch remains unavailable
+for three consecutive checks, five seconds apart. BM25 and MongoDB queries do
+not need the model or a GPU.
 The bundle contains 1,935,112 vectors; the other 14,964 reviews have no usable
 text and remain unembedded.
 
@@ -65,10 +80,13 @@ text and remain unembedded.
 - `scripts/ingest.py`, `rules.py`, `owners.py`, `quotes.py`: loading, validation,
   reconciliation and local queries. Price policies are applied at retrieval.
 - `scripts/embeddings.py`: resumable vector export/import, with source and text checks.
-- `scripts/nlp.py`, `encoder.py`: model encoding and kNN queries.
+- `scripts/nlp.py`, `encoder.py`, `query_encoder.py`: model encoding, persistent
+  query encoder on localhost port 8791, and kNN queries.
 - `database/`: mappings, validators and portable service commands.
 - `scripts/test_*.py`: unit and live database checks.
 - `docs/entity_examples.pdf`: stored entity examples.
+- `docs/anomalies_and_handling.pdf`: anomalies, handling policies and worked examples.
+- `scripts/query_examples.py --query N`: runs query N from that sheet.
 
 Generated files, environments, database storage and execution reports are ignored
 by Git. Originals and vector parts use Git LFS. The prepared sources contain

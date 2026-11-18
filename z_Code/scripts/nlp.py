@@ -133,12 +133,10 @@ def embed(limit):
 
 
 def search(text, k):
-    from encoder import Encoder, CONTRACT as encoder_contract
+    from query_encoder import query_vector
 
-    if encoder_contract != CONTRACT:
-        raise RuntimeError("Query encoder settings do not match index metadata.")
     check_model()
-    vector = Encoder().query(text)
+    vector = query_vector(text)
     result = es(
         "POST",
         INDEX + "/_search",
@@ -147,7 +145,7 @@ def search(text, k):
             "_source": {"excludes": ["embedding"]},
             "knn": {
                 "field": "embedding",
-                "query_vector": vector.tolist(),
+                "query_vector": vector,
                 "k": k,
                 "num_candidates": max(100, k * 10),
             },
