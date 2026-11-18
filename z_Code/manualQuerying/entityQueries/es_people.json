@@ -1,0 +1,35 @@
+{
+  "from": 0,
+  "size": 10,
+  "track_total_hits": true,
+  "_source": [
+    "person_id", "name", "phone", "roles", "owner_id", "identity_document",
+    "observed_at", "quality_flags", "resolution", "observations"
+  ],
+  "query": {
+    "bool": {
+      "must": [
+        {"match": {"name": {"query": "Ana", "operator": "and"}}}
+      ],
+      "filter": [
+        {"terms": {"roles": ["host", "reviewer"]}},
+        {"exists": {"field": "phone"}}
+      ],
+      "must_not": [
+        {"term": {"quality_flags": "unresolved_phone"}}
+      ]
+    }
+  },
+  "sort": [
+    {"_score": "desc"},
+    {"name.exact": "asc"},
+    {"person_id": "asc"}
+  ],
+  "aggs": {
+    "roles": {"terms": {"field": "roles", "size": 2}},
+    "owner_nationalities": {
+      "terms": {"field": "identity_document.nationality", "missing": "no_owner_document", "size": 5}
+    },
+    "quality_flags": {"terms": {"field": "quality_flags", "size": 10}}
+  }
+}

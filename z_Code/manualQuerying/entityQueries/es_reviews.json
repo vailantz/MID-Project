@@ -1,0 +1,46 @@
+{
+  "from": 0,
+  "size": 10,
+  "track_total_hits": true,
+  "_source": {
+    "excludes": ["embedding"]
+  },
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "comments": {
+              "query": "quiet apartment",
+              "operator": "and"
+            }
+          }
+        }
+      ],
+      "filter": [
+        {"range": {"date": {"gte": "2025-01-01", "lte": "2026-12-31"}}},
+        {"range": {"review_score": {"gte": 4, "lte": 5}}}
+      ]
+    }
+  },
+  "sort": [
+    {"_score": "desc"},
+    {"date": "desc"},
+    {"review_id": "asc"}
+  ],
+  "highlight": {
+    "pre_tags": ["["],
+    "post_tags": ["]"],
+    "fields": {
+      "comments": {"fragment_size": 180, "number_of_fragments": 2}
+    }
+  },
+  "aggs": {
+    "average_review_score": {"avg": {"field": "review_score"}},
+    "top_accommodations": {"terms": {"field": "listing_id", "size": 5}},
+    "quality_flags": {"terms": {"field": "quality_flags", "size": 10}},
+    "reviews_per_month": {
+      "date_histogram": {"field": "date", "calendar_interval": "month", "min_doc_count": 1}
+    }
+  }
+}

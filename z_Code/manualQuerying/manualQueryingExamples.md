@@ -2,6 +2,11 @@
 
 Run these commands from `z_Code` in PowerShell, with the required services running.
 
+## Queries for every entity
+
+See [entityQueries/README.md](entityQueries/README.md) for six editable templates
+and their run commands: two ES indices and four MongoDB collections.
+
 ## MongoDB accommodation query
 
 Returns five listings in Lisboa with capacity of at least two, Wifi, and a rating
