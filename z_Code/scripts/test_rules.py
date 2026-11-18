@@ -200,6 +200,71 @@ class QuoteRules(unittest.TestCase):
 
 
 class QualityRules(unittest.TestCase):
+    def test_national_phone_is_flagged_only_when_its_digits_need_normalising(self):
+        raw = {"person_id": "P" + "1" * 24, "phone": "915478281",
+               "country": "Portugal", "observed_at": "2026-10-01T12:00:00Z"}
+        values, flags = normalize(raw, "person")
+        self.assertEqual(values["phone"], "+351 915478281")
+        self.assertNotIn("normalized_phone", flags)
+        _, flags = normalize({**raw, "phone": "915 478 281"}, "person")
+        self.assertIn("normalized_phone", flags)
+
+    def test_boolean_review_scores_are_invalid(self):
+        raw = {"person_id": "P" + "1" * 24, "review_id": "R1-2",
+               "record_id": "R1-2:snapshot", "listing_id": "1",
+               "date": "2026-01-01", "observed_at": "2026-10-01T12:00:00Z",
+               "comments": "Good"}
+        for score in (True, False):
+            values, flags = normalize({**raw, "review_score": score}, "review")
+            self.assertIsNone(values["review_score"])
+            self.assertIn("invalid_review_score", flags)
+
+    def test_person_history_retains_distinct_source_references(self):
+        first = self.observation("property-1", 4, "2026-10-01T12:00:00Z")
+        second = {**deepcopy(first), "record_id": "property-2"}
+        result = resolve([first, second, deepcopy(first)], ["score"])
+        self.assertEqual([(o["record_id"], o["occurrences"]) for o in result["observations"]],
+                         [("property-1", 2), ("property-2", 1)])
+
+    def test_ratings_preserve_usable_components(self):
+        old = self.observation("old", 0, "2026-10-01T12:00:00Z")
+        new = self.observation("new", 0, "2026-10-02T12:00:00Z")
+        old["values"]["ratings"] = {"rating": 4.8, "cleanliness": 4.7}
+        new["values"]["ratings"] = {"rating": None, "cleanliness": 4.9}
+        result = resolve([old, new], ["ratings"])
+        self.assertEqual(result["ratings"], {"rating": 4.8, "cleanliness": 4.9})
+        self.assertEqual(result["resolution"]["ratings"]["fields"]["cleanliness"]["record_id"], "new")
+
+    def test_ratings_conflict_does_not_erase_agreeing_components(self):
+        old = self.observation("old", 0, None)
+        new = self.observation("new", 0, "2026-10-02T12:00:00Z")
+        old["values"]["ratings"] = {"rating": 4.8, "cleanliness": 4.7}
+        new["values"]["ratings"] = {"rating": 4.0, "cleanliness": 4.7}
+        result = resolve([old, new], ["ratings"])
+        self.assertEqual(result["ratings"], {"rating": None, "cleanliness": 4.7})
+        self.assertIn("unresolved_ratings", result["quality_flags"])
+
+    def test_missing_amenities_do_not_replace_known_amenities(self):
+        old = self.observation("old", 0, "2026-10-01T12:00:00Z")
+        new = self.observation("new", 0, "2026-10-02T12:00:00Z")
+        old["values"]["amenities"] = ["Wifi"]
+        new["values"]["amenities"] = None
+        self.assertEqual(resolve([old, new], ["amenities"])["amenities"], ["Wifi"])
+        new["values"]["amenities"] = []
+        self.assertEqual(resolve([old, new], ["amenities"])["amenities"], [])
+
+    def test_normalisation_keeps_missing_amenities_unknown_for_resolution(self):
+        raw = {"host_person_id": "P" + "1" * 24, "record_id": "1:snapshot",
+               "listing_id": "1", "observed_at": "2026-10-01T12:00:00Z",
+               "location": {"municipality": "Lisboa", "neighbourhood": None,
+                            "latitude": 38.7, "longitude": -9.1},
+               "ratings": {"rating": 4.8}, "amenities": None, "price_quotes": [],
+               "review_summary": {"first_date": None, "last_date": None},
+               "last_scraped": "2026-09-19"}
+        values, flags = normalize(raw, "property")
+        self.assertIsNone(values["amenities"])
+        self.assertIn("missing_amenities", flags)
+
     def test_missing_identity_is_rejected(self):
         with self.assertRaises(ValueError):
             normalize({"person_id": "", "review_id": "R1", "record_id": "r1"}, "review")

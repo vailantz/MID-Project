@@ -136,5 +136,5 @@ if __name__ == "__main__":
         help="Generate owner input from unchanged prepared sources first.",
     )
     args = parser.parse_args()
-    with writer_lock("owners.lock"):
+    with writer_lock():
         print(json.dumps(run(args.prepare), indent=2))

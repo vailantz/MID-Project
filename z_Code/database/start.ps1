@@ -3,6 +3,8 @@ $ErrorActionPreference = 'Stop'
 $project = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $runtime = Join-Path $project '.runtime'
 $state = Join-Path $runtime 'state'
+$python = Join-Path $project '.venv/Scripts/python.exe'
+if (!(Test-Path -LiteralPath $python)) { throw 'Run setup.ps1 to prepare the base Python environment first.' }
 New-Item -ItemType Directory -Force -Path $state | Out-Null
 $mongo = Get-ChildItem -LiteralPath (Join-Path $runtime 'mongodb') -Filter mongod.exe -Recurse | Select-Object -First 1
 $elastic = Get-ChildItem -LiteralPath (Join-Path $runtime 'elasticsearch') -Filter elasticsearch.bat -Recurse | Select-Object -First 1
@@ -37,8 +39,19 @@ ingest.geoip.downloader.enabled: false
 
 $deadline = (Get-Date).AddSeconds($WaitSeconds)
 $ready = $false
+$mongoCheck = @'
+import sys
+from pymongo import MongoClient
+try:
+    with MongoClient('mongodb://127.0.0.1:27017', serverSelectionTimeoutMS=1000, connectTimeoutMS=1000, socketTimeoutMS=1000) as client:
+        client.admin.command('ping')
+except Exception:
+    sys.exit(1)
+'@
 do {
     try {
+        & $python -c $mongoCheck
+        if ($LASTEXITCODE) { throw 'MongoDB is not ready.' }
         $health = Invoke-RestMethod 'http://127.0.0.1:9200/_cluster/health' -TimeoutSec 2
         if ($health.cluster_name -ne 'dmi-79189') { throw 'Port 9200 belongs to another Elasticsearch cluster.' }
         if ($health.status -in @('green', 'yellow')) {

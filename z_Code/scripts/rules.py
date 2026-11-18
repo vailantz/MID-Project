@@ -84,7 +84,11 @@ def normalize(raw, kind):
             flags.append("missing_name")
         value = raw.get("phone")
         country = raw.get("country")
-        phone = check("phone", value, phone_value(value, country), True)
+        phone = phone_value(value, country)
+        # A2 already supplies country and national digits separately. Adding a
+        # calling code internally is not a correction to the source phone.
+        comparable = phone.split(" ", 1)[1] if phone and country is not None else phone
+        check("phone", value, comparable, True)
         return {
             "person_id": raw["person_id"],
             "name": name,
@@ -106,7 +110,11 @@ def normalize(raw, kind):
             flags.append("missing_comments")
         score = raw.get("review_score")
         try:
-            score = float(score) if score not in (None, "") else None
+            score = (
+                float(score)
+                if score not in (None, "") and not isinstance(score, bool)
+                else None
+            )
         except (TypeError, ValueError):
             score = None
         if score is not None and (not math.isfinite(score) or not 0 <= score <= 5):
@@ -165,7 +173,7 @@ def normalize(raw, kind):
         d["amenities"] = (
             list(dict.fromkeys(aliases.get(a.casefold(), a) for a in amenities))
             if isinstance(amenities, list)
-            else []
+            else None
         )
         if amenities is None:
             flags.append("missing_amenities")
@@ -190,49 +198,72 @@ def resolve(observations, keys):
     result = {}
     flags = set()
     decisions = {}
-    for field in keys:
-        available = [o for o in observations if o["values"].get(field) is not None]
+
+    def choose(field, candidates):
+        available = [(o, value) for o, value in candidates if value is not None]
         unique = {
-            json.dumps(o["values"][field], sort_keys=True, ensure_ascii=False)
-            for o in available
+            json.dumps(value, sort_keys=True, ensure_ascii=False)
+            for _, value in available
         }
         if not unique:
-            result[field] = None
-            continue
+            return None, None
         if len(unique) == 1:
-            selected = available[0]
+            selected, value = available[0]
             policy = "agreement"
         else:
             flags.add("changed_" + field)
             latest = max(
-                (o["values"]["observed_at"] for o in available if o["values"]["observed_at"]),
+                (o["values"]["observed_at"] for o, _ in available if o["values"]["observed_at"]),
                 default=None,
             )
-            dated = [o for o in available if o["values"]["observed_at"] == latest]
+            dated = [(o, value) for o, value in available if o["values"]["observed_at"] == latest]
             values = {
-                json.dumps(o["values"][field], sort_keys=True, ensure_ascii=False)
-                for o in dated
+                json.dumps(value, sort_keys=True, ensure_ascii=False)
+                for _, value in dated
             }
-            if any(o["values"]["observed_at"] is None for o in available) or len(values) != 1:
-                result[field] = None
+            unknown_time = any(o["values"]["observed_at"] is None for o, _ in available)
+            if unknown_time or len(values) != 1:
                 flags.add("unresolved_" + field)
-                decisions[field] = {"rule": "unresolved chronology"}
-                continue
-            selected = dated[0]
+                return None, {
+                    "rule": "unresolved chronology",
+                    "reason": "unknown observation time" if unknown_time else "conflicting latest values",
+                }
+            selected, value = dated[0]
             policy = "latest valid observation"
-        result[field] = selected["values"][field]
-        if len(unique) > 1:
-            decisions[field] = {"rule": policy, "record_id": selected["record_id"]}
-    fingerprints = set()
+        decision = {"rule": policy, "record_id": selected["record_id"]} if len(unique) > 1 else None
+        return value, decision
+
+    for field in keys:
+        if field == "ratings":
+            components = dict.fromkeys(
+                name for o in observations for name in (o["values"].get(field) or {})
+            )
+            resolved, component_decisions = {}, {}
+            for name in components:
+                value, decision = choose(field, [
+                    (o, (o["values"].get(field) or {}).get(name)) for o in observations
+                ])
+                resolved[name] = value
+                if decision:
+                    component_decisions[name] = decision
+            result[field] = resolved or None
+            if component_decisions:
+                decisions[field] = {"fields": component_decisions}
+        else:
+            result[field], decision = choose(field, [
+                (o, o["values"].get(field)) for o in observations
+            ])
+            if decision:
+                decisions[field] = decision
+    fingerprints = {}
     versions = []
     for o in observations:
         flags.update(o["flags"])
-        signature = json.dumps(o["raw"], sort_keys=True, ensure_ascii=False)
+        signature = json.dumps([o["record_id"], o["raw"]], sort_keys=True, ensure_ascii=False)
         if signature in fingerprints:
             flags.add("exact_duplicate_observation")
-            next(v for v in versions if v["raw"] == o["raw"])["occurrences"] += 1
+            fingerprints[signature]["occurrences"] += 1
         else:
-            fingerprints.add(signature)
             versions.append(
                 {
                     "record_id": o["record_id"],
@@ -242,6 +273,7 @@ def resolve(observations, keys):
                     "occurrences": 1,
                 }
             )
+            fingerprints[signature] = versions[-1]
     if len(versions) > 1:
         flags.add("multiple_observations")
     text = [

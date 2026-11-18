@@ -25,8 +25,6 @@ PACKAGES = [
 
 def download_mongodb(url, archive):
     # Independent byte ranges avoid a slow single connection to the large ZIP.
-    partial = archive.with_suffix(".part")
-    offset = partial.stat().st_size if partial.exists() else 0
     request = urllib.request.Request(url, headers={"Range": "bytes=0-0"})
     with urllib.request.urlopen(request, timeout=60) as response:
         total = int(response.headers["Content-Range"].split("/")[-1])
@@ -34,7 +32,7 @@ def download_mongodb(url, archive):
     chunks.mkdir(exist_ok=True)
     ranges = [
         (start, min(start + 8 * 1024 * 1024, total) - 1)
-        for start in range(offset, total, 8 * 1024 * 1024)
+        for start in range(0, total, 8 * 1024 * 1024)
     ]
 
     def fetch(bounds):
@@ -59,13 +57,13 @@ def download_mongodb(url, archive):
 
     with ThreadPoolExecutor(max_workers=12) as pool:
         parts = list(pool.map(fetch, ranges))
-    with archive.open("wb") as output:
-        if partial.exists():
-            with partial.open("rb") as source:
-                shutil.copyfileobj(source, output)
+    # An interrupted assembly must never appear to be a completed archive.
+    assembled = archive.with_suffix(".assembling")
+    with assembled.open("wb") as output:
         for part in parts:
             with part.open("rb") as source:
                 shutil.copyfileobj(source, output)
+    assembled.replace(archive)
 
 
 def install(package):
@@ -77,27 +75,37 @@ def install(package):
         return
     ROOT.mkdir(parents=True, exist_ok=True)
     archive = ROOT / (name + ".zip")
-    if not archive.exists():
-        print(name + ": downloading", flush=True)
-        if name == "mongodb":
-            download_mongodb(url, archive)
-        else:
-            with urllib.request.urlopen(
-                url, timeout=120
-            ) as response, archive.with_suffix(".part").open("wb") as output:
-                while chunk := response.read(1024 * 1024):
-                    output.write(chunk)
-            archive.with_suffix(".part").replace(archive)
+    expected = None
     if algorithm:
         with urllib.request.urlopen(url + "." + algorithm, timeout=60) as response:
             expected = response.read().decode().split()[0].lower()
+    for attempt in range(2):
+        if not archive.exists():
+            print(name + ": downloading", flush=True)
+            if name == "mongodb":
+                download_mongodb(url, archive)
+            else:
+                with urllib.request.urlopen(url, timeout=120) as response, archive.with_suffix(".part").open("wb") as output:
+                    shutil.copyfileobj(response, output)
+                archive.with_suffix(".part").replace(archive)
+        if expected is None:
+            break
         digest = hashlib.new(algorithm)
         with archive.open("rb") as source:
             while chunk := source.read(1024 * 1024):
                 digest.update(chunk)
-        if digest.hexdigest() != expected:
+        if digest.hexdigest() == expected:
+            print(name + ": checksum verified", flush=True)
+            break
+        archive.unlink()
+        if name == "mongodb":
+            chunks = ROOT / "mongodb-download"
+            if chunks.exists():
+                for part in chunks.iterdir():
+                    if part.is_file() and part.name.isdigit():
+                        part.unlink()
+        if attempt:
             raise RuntimeError(name + ": archive checksum mismatch")
-        print(name + ": checksum verified", flush=True)
     target.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(archive) as source:
         # Debug symbols are not needed to execute the database server.

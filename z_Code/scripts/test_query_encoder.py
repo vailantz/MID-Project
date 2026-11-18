@@ -62,6 +62,27 @@ class QueryService(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "different model"):
                     query_encoder.health()
 
+    def test_start_waits_for_busy_service_without_spawning_another(self):
+        ready = {"contract": query_encoder.CONTRACT, "pid": 123}
+        with patch.object(query_encoder, "health", side_effect=[requests.ReadTimeout(), ready]), \
+             patch.object(query_encoder.time, "sleep"), \
+             patch.object(query_encoder.subprocess, "Popen") as spawn:
+            self.assertEqual(query_encoder.start(), ready)
+            spawn.assert_not_called()
+
+    def test_start_launches_service_after_connection_timeout(self):
+        ready = {"contract": query_encoder.CONTRACT, "pid": 123}
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as temporary, \
+             patch.object(query_encoder, "ROOT", Path(temporary)), \
+             patch.object(query_encoder, "health", side_effect=[requests.ConnectTimeout(), ready]), \
+             patch.object(query_encoder, "es"), \
+             patch.object(query_encoder.time, "sleep"), \
+             patch.object(query_encoder.subprocess, "Popen") as spawn:
+            self.assertEqual(query_encoder.start(), ready)
+            self.assertEqual(spawn.call_count, 1)
+
     def test_shutdown_requires_three_consecutive_failures(self):
         finished = Mock()
         finished.wait.return_value = False

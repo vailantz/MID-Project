@@ -90,7 +90,7 @@ class Encoder:
             return np.concatenate([self.encode(texts[:middle]), self.encode(texts[middle:])])
 
     def query(self, text):
-        return self.encode([f"Instruct: {QUERY_INSTRUCTION}\nQuery:{text}"])[0]
+        return self.encode([f"Instruct: {QUERY_INSTRUCTION}\nQuery:{clean_text(text)}"])[0]
 
     def batches(self, records):
         # Length sorting reduces padding; the token budget bounds GPU activation memory.

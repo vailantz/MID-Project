@@ -17,8 +17,8 @@ from support import CONTRACT, ROOT, es
 URL = "http://127.0.0.1:8791"
 
 
-def health():
-    response = requests.get(URL + "/health", timeout=2)
+def health(timeout=2):
+    response = requests.get(URL + "/health", timeout=timeout)
     response.raise_for_status()
     result = response.json()
     if result["contract"] != CONTRACT:
@@ -28,7 +28,7 @@ def health():
 
 def query_vector(text):
     try:
-        health()
+        health(timeout=120)
         response = requests.post(URL + "/encode", json={"text": text}, timeout=120)
     except requests.ConnectionError as error:
         raise RuntimeError(
@@ -113,31 +113,33 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def start():
-    try:
-        return health()
-    except requests.ConnectionError:
-        pass
-    es("GET", "")
-    state = ROOT / ".runtime/state"
-    state.mkdir(parents=True, exist_ok=True)
-    log = state / "qwen.log"
-    with log.open("a", encoding="utf-8") as output:
-        process = subprocess.Popen(
-            [sys.executable, str(Path(__file__).resolve()), "--serve"],
-            stdin=subprocess.DEVNULL,
-            stdout=output,
-            stderr=subprocess.STDOUT,
-            creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
-        )
     deadline = time.monotonic() + 600
+    process = None
+    log = ROOT / ".runtime/state/qwen.log"
     while time.monotonic() < deadline:
-        if process.poll() is not None:
-            raise RuntimeError(f"Qwen startup failed. Check {log}.")
         try:
             return health()
+        except requests.ReadTimeout:
+            # The bound service may be loading or handling a long query. Wait
+            # for it instead of failing or launching another model process.
+            pass
         except (requests.ConnectionError, requests.Timeout):
-            time.sleep(1)
-    process.terminate()
+            if process is None:
+                es("GET", "")
+                log.parent.mkdir(parents=True, exist_ok=True)
+                with log.open("a", encoding="utf-8") as output:
+                    process = subprocess.Popen(
+                        [sys.executable, str(Path(__file__).resolve()), "--serve"],
+                        stdin=subprocess.DEVNULL,
+                        stdout=output,
+                        stderr=subprocess.STDOUT,
+                        creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
+                    )
+            elif process.poll() is not None:
+                raise RuntimeError(f"Qwen startup failed. Check {log}.")
+        time.sleep(1)
+    if process is not None:
+        process.terminate()
     raise RuntimeError(f"Qwen startup timed out. Check {log}.")
 
 
